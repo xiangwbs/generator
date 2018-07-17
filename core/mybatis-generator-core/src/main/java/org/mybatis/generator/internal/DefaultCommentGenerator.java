@@ -73,7 +73,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * xiangwbs
+     * modified
      * mapper.xml
      */
     @Override
@@ -171,9 +171,6 @@ public class DefaultCommentGenerator implements CommentGenerator {
         }
     }
 
-    /**
-     *xiangwbs
-     */
     @Override
     public void addClassComment(InnerClass innerClass,
                                 IntrospectedTable introspectedTable) {
@@ -218,6 +215,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
         innerClass.addJavaDocLine(" */"); //$NON-NLS-1$
     }
 
+    /**
+     * modified
+     * model
+     */
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass,
                                      IntrospectedTable introspectedTable) {
@@ -225,11 +226,12 @@ public class DefaultCommentGenerator implements CommentGenerator {
             return;
         }
 
+        topLevelClass.addJavaDocLine("import lombok.Data;"); //$NON-NLS-1$
         topLevelClass.addJavaDocLine("/**"); //$NON-NLS-1$
-
-        String remarks = introspectedTable.getRemarks();
+        System.out.println(introspectedTable.toString());
+        String remarks = introspectedTable.getFullyQualifiedTable().getRemarks();
         if (addRemarkComments && StringUtility.stringHasValue(remarks)) {
-            topLevelClass.addJavaDocLine(" * Database Table Remarks:"); //$NON-NLS-1$
+//            topLevelClass.addJavaDocLine(" * Database Table Remarks:"); //$NON-NLS-1$
             String[] remarkLines = remarks.split(System.getProperty("line.separator"));  //$NON-NLS-1$
             for (String remarkLine : remarkLines) {
                 topLevelClass.addJavaDocLine(" *   " + remarkLine);  //$NON-NLS-1$
@@ -246,6 +248,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         topLevelClass.addJavaDocLine(sb.toString());
 
         topLevelClass.addJavaDocLine(" */"); //$NON-NLS-1$
+        topLevelClass.addJavaDocLine("@Data"); //$NON-NLS-1$
     }
 
     @Override
@@ -271,7 +274,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * xiangwbs
+     * modified
      */
     @Override
     public void addFieldComment(Field field,
@@ -330,7 +333,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * xiangwbs
+     * modified
      * mapper.java
      */
     @Override
@@ -356,7 +359,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * xiangwbs
+     * modified
      */
     @Override
     public void addGetterComment(Method method,
@@ -393,7 +396,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * xiangwbs
+     * modified
      */
     @Override
     public void addSetterComment(Method method,

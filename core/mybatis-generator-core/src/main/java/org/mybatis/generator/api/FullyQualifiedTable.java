@@ -29,6 +29,8 @@ import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.DomainObjectRenamingRule;
 
 /**
+ * modified
+ * -添加remarks字段:表注释信息
  * The Class FullyQualifiedTable.
  *
  * @author Jeff Butler
@@ -47,6 +49,7 @@ public class FullyQualifiedTable {
     private boolean ignoreQualifiersAtRuntime;
     private String beginningDelimiter;
     private String endingDelimiter;
+    private String remarks;
     private DomainObjectRenamingRule domainObjectRenamingRule;
 
     /**
@@ -380,5 +383,13 @@ public class FullyQualifiedTable {
 
     public String getDomainObjectSubPackage() {
         return domainObjectSubPackage;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

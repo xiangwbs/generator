@@ -124,8 +124,9 @@ public class XmlElement extends Element {
         return name;
     }
 
-    /* (non-Javadoc)
-     * @see org.mybatis.generator.api.dom.xml.Element#getFormattedContent(int)
+    /**
+     * modified
+     * xmlFormat
      */
     @Override
     public String getFormattedContent(int indentLevel) {
@@ -152,9 +153,13 @@ public class XmlElement extends Element {
             sb.append("</"); //$NON-NLS-1$
             sb.append(name);
             sb.append('>');
+            if(indentLevel == 1) {
+                //每个insert/update/select之间插入一个空行
+                OutputUtilities.newLine(sb);
+            }
 
         } else {
-            sb.append(" />"); //$NON-NLS-1$
+            sb.append("/>"); //去除多余的空格
         }
 
         return sb.toString();

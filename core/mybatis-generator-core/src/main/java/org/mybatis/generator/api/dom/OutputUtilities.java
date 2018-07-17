@@ -48,7 +48,7 @@ public class OutputUtilities {
     /**
      * Utility method that indents the buffer by the default amount for Java
      * (four spaces per indent level).
-     * 
+     *
      * @param sb
      *            a StringBuilder to append to
      * @param indentLevel
@@ -61,9 +61,10 @@ public class OutputUtilities {
     }
 
     /**
+     * modified
      * Utility method that indents the buffer by the default amount for XML (two
      * spaces per indent level).
-     * 
+     *
      * @param sb
      *            a StringBuilder to append to
      * @param indentLevel
@@ -71,13 +72,13 @@ public class OutputUtilities {
      */
     public static void xmlIndent(StringBuilder sb, int indentLevel) {
         for (int i = 0; i < indentLevel; i++) {
-            sb.append("  "); //$NON-NLS-1$
+            sb.append("    "); //修改为4个空格缩进
         }
     }
 
     /**
      * Utility method. Adds a newline character to a StringBuilder.
-     * 
+     *
      * @param sb
      *            the StringBuilder to be appended to
      */
