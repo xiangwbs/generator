@@ -228,8 +228,8 @@ public class DefaultCommentGenerator implements CommentGenerator {
         }
         topLevelClass.addJavaDocLine("import lombok.Data;");
         topLevelClass.addJavaDocLine("/**");
-        topLevelClass.addJavaDocLine(" * @author xiangwb");
-        topLevelClass.addJavaDocLine(" * @date " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
+        topLevelClass.addJavaDocLine(" * @author: xiangwb");
+        topLevelClass.addJavaDocLine(" * @date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
         String remarks = introspectedTable.getFullyQualifiedTable().getRemarks();
         topLevelClass.addJavaDocLine(" * @description " + remarks);
         topLevelClass.addJavaDocLine(" */");
