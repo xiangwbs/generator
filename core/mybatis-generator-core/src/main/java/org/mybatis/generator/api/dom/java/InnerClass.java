@@ -291,11 +291,12 @@ public class InnerClass extends JavaElement {
         }
 
         sb.append(" {"); //$NON-NLS-1$
+        OutputUtilities.newLine(sb);//新增
         indentLevel++;
-
+        //遍历输出所有字段
         Iterator<Field> fldIter = fields.iterator();
         while (fldIter.hasNext()) {
-            OutputUtilities.newLine(sb);
+//            OutputUtilities.newLine(sb);
             Field field = fldIter.next();
             sb.append(field.getFormattedContent(indentLevel, compilationUnit));
             if (fldIter.hasNext()) {
@@ -318,7 +319,7 @@ public class InnerClass extends JavaElement {
         }
 
         if (methods.size() > 0) {
-            OutputUtilities.newLine(sb);
+//            OutputUtilities.newLine(sb);
         }
         //生成get/set方法
 //        Iterator<Method> mtdIter = methods.iterator();
