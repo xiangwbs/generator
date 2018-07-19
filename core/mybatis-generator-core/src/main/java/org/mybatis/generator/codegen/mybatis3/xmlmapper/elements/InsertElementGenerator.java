@@ -101,10 +101,10 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
-            insertClause.append("\n        ");//换行
+            insertClause.append("\n        ");//新增换行
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
-            valuesClause.append("\n        ");//换行
+            valuesClause.append("\n        ");//新增换行
             valuesClause.append(MyBatis3FormattingUtilities
                     .getParameterClause(introspectedColumn));
             if (i + 1 < columns.size()) {
