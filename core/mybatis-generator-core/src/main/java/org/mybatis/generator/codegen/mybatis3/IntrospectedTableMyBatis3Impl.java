@@ -168,10 +168,13 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         abstractGenerator.setWarnings(warnings);
     }
 
+    /**
+     * 获取model，mapper.xml信息
+     */
     @Override
     public List<GeneratedJavaFile> getGeneratedJavaFiles() {
         List<GeneratedJavaFile> answer = new ArrayList<>();
-
+        //获取model信息
         for (AbstractJavaGenerator javaGenerator : javaModelGenerators) {
             List<CompilationUnit> compilationUnits = javaGenerator
                     .getCompilationUnits();
@@ -184,7 +187,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                 answer.add(gjf);
             }
         }
-
+        //获取mapper.java信息
         for (AbstractJavaGenerator javaGenerator : clientGenerators) {
             List<CompilationUnit> compilationUnits = javaGenerator
                     .getCompilationUnits();

@@ -60,6 +60,10 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         super(requiresMatchedXMLGenerator);
     }
 
+    /**
+     * modified
+     * 获取mapper.java信息
+     */
     @Override
     public List<CompilationUnit> getCompilationUnits() {
         progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
@@ -85,21 +89,21 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             interfaze.addSuperInterface(fqjt);
             interfaze.addImportedType(fqjt);
         }
-
-        addCountByExampleMethod(interfaze);
-        addDeleteByExampleMethod(interfaze);
-        addDeleteByPrimaryKeyMethod(interfaze);
+        //去除非必要方法已经调整方法顺序
         addInsertMethod(interfaze);
-        addInsertSelectiveMethod(interfaze);
-        addSelectByExampleWithBLOBsMethod(interfaze);
-        addSelectByExampleWithoutBLOBsMethod(interfaze);
-        addSelectByPrimaryKeyMethod(interfaze);
+//        addInsertSelectiveMethod(interfaze);
+        addDeleteByPrimaryKeyMethod(interfaze);
+        addDeleteByExampleMethod(interfaze);
+        addUpdateByPrimaryKeySelectiveMethod(interfaze);
+        addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
+//        addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
         addUpdateByExampleSelectiveMethod(interfaze);
         addUpdateByExampleWithBLOBsMethod(interfaze);
         addUpdateByExampleWithoutBLOBsMethod(interfaze);
-        addUpdateByPrimaryKeySelectiveMethod(interfaze);
-        addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
-        addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
+        addSelectByPrimaryKeyMethod(interfaze);
+        addSelectByExampleWithBLOBsMethod(interfaze);
+        addSelectByExampleWithoutBLOBsMethod(interfaze);
+        addCountByExampleMethod(interfaze);
 
         List<CompilationUnit> answer = new ArrayList<>();
         if (context.getPlugins().clientGenerated(interfaze, null,

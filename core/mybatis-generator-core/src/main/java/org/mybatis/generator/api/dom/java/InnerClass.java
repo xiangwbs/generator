@@ -227,7 +227,8 @@ public class InnerClass extends JavaElement {
     /**
      * Gets the formatted content.
      * modified
-     * 去除get/set方法
+     * 获取实体类格式化内容
+     * -去除get/set方法
      *
      * @param indentLevel     the indent level
      * @param compilationUnit the compilation unit

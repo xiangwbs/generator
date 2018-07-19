@@ -49,7 +49,8 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 
     /**
      * modified
-     * 交换field和serialVersionUID生成顺序
+     * MyBatis3获取实体信息
+     * -交换field和插件顺序
      *
      * @return
      */
@@ -88,7 +89,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
             }
         }
         List<CompilationUnit> answer = new ArrayList<>();
-        //添加serialVersionUID
+        //添加插件信息
         if (context.getPlugins().modelBaseRecordClassGenerated(
                 topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);

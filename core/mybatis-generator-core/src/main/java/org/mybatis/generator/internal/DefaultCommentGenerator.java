@@ -77,7 +77,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /**
      * modified
-     * mapper.xml
+     * mapper.xml注释
      */
     @Override
     public void addComment(XmlElement xmlElement) {
@@ -218,7 +218,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /**
      * modified
-     * model
+     * 实体类注释
      */
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass,
@@ -231,7 +231,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
         topLevelClass.addJavaDocLine(" * @author: xiangwb");
         topLevelClass.addJavaDocLine(" * @date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
         String remarks = introspectedTable.getFullyQualifiedTable().getRemarks();
-        topLevelClass.addJavaDocLine(" * @description " + remarks);
+        topLevelClass.addJavaDocLine(" * @description: " + remarks);
         topLevelClass.addJavaDocLine(" */");
         topLevelClass.addJavaDocLine("@Data");
 //        topLevelClass.addJavaDocLine("/**"); //$NON-NLS-1$
@@ -279,6 +279,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /**
      * modified
+     * 数据库字段中文注释
      */
     @Override
     public void addFieldComment(Field field,
@@ -317,6 +318,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /**
      * modified
+     * 其他字段注释
      */
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {
@@ -341,7 +343,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /**
      * modified
-     * mapper.java
+     * mapper.java注释
      */
     @Override
     public void addGeneralMethodComment(Method method,

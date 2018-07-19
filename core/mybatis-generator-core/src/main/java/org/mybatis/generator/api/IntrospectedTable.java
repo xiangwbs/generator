@@ -473,6 +473,10 @@ public abstract class IntrospectedTable {
         context.getPlugins().initialized(this);
     }
 
+    /**
+     * modified
+     * -修改方法名
+     */
     protected void calculateXmlAttributes() {
         setMyBatis3XmlMapperFileName(calculateMyBatis3XmlMapperFileName());
         setMyBatis3XmlMapperPackage(calculateSqlMapPackage());
@@ -484,18 +488,18 @@ public abstract class IntrospectedTable {
 
         setCountByExampleStatementId("countByExample"); //$NON-NLS-1$
         setDeleteByExampleStatementId("deleteByExample"); //$NON-NLS-1$
-        setDeleteByPrimaryKeyStatementId("deleteByPrimaryKey"); //$NON-NLS-1$
+        setDeleteByPrimaryKeyStatementId("deleteById");
         setInsertStatementId("insert"); //$NON-NLS-1$
         setInsertSelectiveStatementId("insertSelective"); //$NON-NLS-1$
-        setSelectAllStatementId("selectAll"); //$NON-NLS-1$
+        setSelectAllStatementId("findAll");
         setSelectByExampleStatementId("selectByExample"); //$NON-NLS-1$
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs"); //$NON-NLS-1$
-        setSelectByPrimaryKeyStatementId("selectByPrimaryKey"); //$NON-NLS-1$
+        setSelectByPrimaryKeyStatementId("findById");
         setUpdateByExampleStatementId("updateByExample"); //$NON-NLS-1$
         setUpdateByExampleSelectiveStatementId("updateByExampleSelective"); //$NON-NLS-1$
         setUpdateByExampleWithBLOBsStatementId("updateByExampleWithBLOBs"); //$NON-NLS-1$
         setUpdateByPrimaryKeyStatementId("updateByPrimaryKey"); //$NON-NLS-1$
-        setUpdateByPrimaryKeySelectiveStatementId("updateByPrimaryKeySelective"); //$NON-NLS-1$
+        setUpdateByPrimaryKeySelectiveStatementId("update");
         setUpdateByPrimaryKeyWithBLOBsStatementId("updateByPrimaryKeyWithBLOBs"); //$NON-NLS-1$
         setBaseResultMapId("BaseResultMap"); //$NON-NLS-1$
         setResultMapWithBLOBsId("ResultMapWithBLOBs"); //$NON-NLS-1$

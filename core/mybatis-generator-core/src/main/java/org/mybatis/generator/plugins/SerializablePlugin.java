@@ -17,6 +17,7 @@ package org.mybatis.generator.plugins;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.IntrospectedTable.TargetRuntime;
@@ -37,7 +38,6 @@ import org.mybatis.generator.api.dom.java.TopLevelClass;
  * attempt to do any versioning of classes.
  *
  * @author Jeff Butler
- *
  */
 public class SerializablePlugin extends PluginAdapter {
 
@@ -88,7 +88,7 @@ public class SerializablePlugin extends PluginAdapter {
 
     /**
      * modified
-     * 去除实现serializable接口
+     * -修改实现serializable接口規則，serialVersionUID生成
      */
     protected void makeSerializable(TopLevelClass topLevelClass,
                                     IntrospectedTable introspectedTable) {
@@ -98,13 +98,30 @@ public class SerializablePlugin extends PluginAdapter {
         }
 
         if (!suppressJavaInterface) {
-            //实现serializable接口
-//            topLevelClass.addImportedType(serializable);
-//            topLevelClass.addSuperInterface(serializable);
-
+            //修改实现serializable接口規則
+            FullyQualifiedJavaType superClass = topLevelClass.getSuperClass();
+            boolean imp = true;
+            if (superClass != null) {
+                try {
+                    Class.forName(superClass.getFullyQualifiedName()).getDeclaredMethod("serialVersionUID");
+                    imp = false;
+                } catch (NoSuchMethodException | ClassNotFoundException ignored) {
+                }
+            }
+            if (imp) {//实现serializable接口
+                topLevelClass.addImportedType(serializable);
+                topLevelClass.addSuperInterface(serializable);
+            }
             Field field = new Field();
             field.setFinal(true);
-            field.setInitializationString("1L"); //$NON-NLS-1$
+            //添加serialVersionUID
+            StringBuilder sb = new StringBuilder();
+            Random random = new Random();
+            sb.append(random.nextInt(7) + 1);
+            for (int i = 0; i < 18; i++) {
+                sb.append(random.nextInt(10));
+            }
+            field.setInitializationString(sb.toString() + "L"); //$NON-NLS-1$
             field.setName("serialVersionUID"); //$NON-NLS-1$
             field.setStatic(true);
             field.setType(new FullyQualifiedJavaType("long")); //$NON-NLS-1$

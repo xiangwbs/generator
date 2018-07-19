@@ -495,6 +495,9 @@ public class Context extends PropertyHolder {
         return steps;
     }
 
+    /**
+     * 获取自动生成文件信息
+     */
     public void generateFiles(ProgressCallback callback,
             List<GeneratedJavaFile> generatedJavaFiles,
             List<GeneratedXmlFile> generatedXmlFiles, List<String> warnings)
@@ -518,8 +521,10 @@ public class Context extends PropertyHolder {
 
                 introspectedTable.initialize();
                 introspectedTable.calculateGenerators(warnings, callback);
+                //获取model，mapper.java信息
                 generatedJavaFiles.addAll(introspectedTable
                         .getGeneratedJavaFiles());
+                //获取mapper.xml信息
                 generatedXmlFiles.addAll(introspectedTable
                         .getGeneratedXmlFiles());
 

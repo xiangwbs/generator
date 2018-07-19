@@ -1,17 +1,17 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2006-2018 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.mybatis.generator.codegen.mybatis3.model;
 
@@ -38,9 +38,9 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
 
 /**
- * 
- * @author Jeff Butler
- * 
+ * modified
+ * MyBatis3Simple获取实体信息
+ * -交换field和插件顺序
  */
 public class SimpleModelGenerator extends AbstractJavaGenerator {
 
@@ -78,7 +78,13 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
                 addDefaultConstructor(topLevelClass);
             }
         }
-
+        //添加插件信息
+        List<CompilationUnit> answer = new ArrayList<>();
+        if (context.getPlugins().modelBaseRecordClassGenerated(topLevelClass,
+                introspectedTable)) {
+            answer.add(topLevelClass);
+        }
+        //添加field信息
         String rootClass = getRootClass();
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             if (RootClassInfo.getInstance(rootClass, warnings)
@@ -109,12 +115,6 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
                     topLevelClass.addMethod(method);
                 }
             }
-        }
-
-        List<CompilationUnit> answer = new ArrayList<>();
-        if (context.getPlugins().modelBaseRecordClassGenerated(topLevelClass,
-                introspectedTable)) {
-            answer.add(topLevelClass);
         }
         return answer;
     }

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -55,6 +55,10 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         super();
     }
 
+    /**
+     * modified
+     * 获取mapper.xml信息
+     */
     protected XmlElement getSqlMapElement() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
         progressCallback.startTask(getString(
@@ -65,27 +69,27 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
                 namespace));
 
         context.getCommentGenerator().addRootComment(answer);
-
+        //去除非必要方法已经调整方法顺序
         addResultMapWithoutBLOBsElement(answer);
         addResultMapWithBLOBsElement(answer);
         addExampleWhereClauseElement(answer);
         addMyBatis3UpdateByExampleWhereClauseElement(answer);
         addBaseColumnListElement(answer);
         addBlobColumnListElement(answer);
-        addSelectByExampleWithBLOBsElement(answer);
-        addSelectByExampleWithoutBLOBsElement(answer);
-        addSelectByPrimaryKeyElement(answer);
+        addInsertElement(answer);
+//        addInsertSelectiveElement(answer);
         addDeleteByPrimaryKeyElement(answer);
         addDeleteByExampleElement(answer);
-        addInsertElement(answer);
-        addInsertSelectiveElement(answer);
-        addCountByExampleElement(answer);
+        addUpdateByPrimaryKeySelectiveElement(answer);
+        addUpdateByPrimaryKeyWithBLOBsElement(answer);
+//        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
         addUpdateByExampleSelectiveElement(answer);
         addUpdateByExampleWithBLOBsElement(answer);
         addUpdateByExampleWithoutBLOBsElement(answer);
-        addUpdateByPrimaryKeySelectiveElement(answer);
-        addUpdateByPrimaryKeyWithBLOBsElement(answer);
-        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
+        addSelectByPrimaryKeyElement(answer);
+        addSelectByExampleWithBLOBsElement(answer);
+        addSelectByExampleWithoutBLOBsElement(answer);
+        addCountByExampleElement(answer);
 
         return answer;
     }
