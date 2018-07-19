@@ -70,7 +70,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
         context.getCommentGenerator().addRootComment(answer);
         //去除非必要方法已经调整方法顺序
-        addResultMapWithoutBLOBsElement(answer);
+        addResultMapWithoutBLOBsElement(answer);//获取resultMap信息
         addResultMapWithBLOBsElement(answer);
         addExampleWhereClauseElement(answer);
         addMyBatis3UpdateByExampleWhereClauseElement(answer);
@@ -244,6 +244,9 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         }
     }
 
+    /**
+     * 初始化每个方法的元素信息
+     */
     protected void initializeAndExecuteGenerator(
             AbstractXmlElementGenerator elementGenerator,
             XmlElement parentElement) {
@@ -251,6 +254,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         elementGenerator.setIntrospectedTable(introspectedTable);
         elementGenerator.setProgressCallback(progressCallback);
         elementGenerator.setWarnings(warnings);
+        //添加每个方法的元素信息
         elementGenerator.addElements(parentElement);
     }
 
@@ -259,6 +263,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         Document document = new Document(
                 XmlConstants.MYBATIS3_MAPPER_PUBLIC_ID,
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
+        //获取xml元素信息
         document.setRootElement(getSqlMapElement());
 
         if (!context.getPlugins().sqlMapDocumentGenerated(document,

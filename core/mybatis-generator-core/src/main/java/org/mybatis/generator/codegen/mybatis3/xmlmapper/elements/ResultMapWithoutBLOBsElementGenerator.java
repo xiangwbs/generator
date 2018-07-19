@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -38,7 +38,9 @@ public class ResultMapWithoutBLOBsElementGenerator extends
         super();
         this.isSimple = isSimple;
     }
-
+    /**
+     * 添加resultMap元素信息
+     */
     @Override
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("resultMap"); //$NON-NLS-1$
@@ -64,6 +66,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends
         if (introspectedTable.isConstructorBased()) {
             addResultMapConstructorElements(answer);
         } else {
+            //添加字段属性信息
             addResultMapElements(answer);
         }
 
@@ -73,6 +76,12 @@ public class ResultMapWithoutBLOBsElementGenerator extends
         }
     }
 
+    /**
+     * modified
+     * 添加resultMap信息
+     * -去除jdbcType
+     * -去除无需装换字段
+     */
     private void addResultMapElements(XmlElement answer) {
         for (IntrospectedColumn introspectedColumn : introspectedTable
                 .getPrimaryKeyColumns()) {
@@ -83,8 +92,8 @@ public class ResultMapWithoutBLOBsElementGenerator extends
                             "column", MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute(
                     "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-            resultElement.addAttribute(new Attribute("jdbcType", //$NON-NLS-1$
-                    introspectedColumn.getJdbcTypeName()));
+//            resultElement.addAttribute(new Attribute("jdbcType", //去除id jdbcType
+//                    introspectedColumn.getJdbcTypeName()));
 
             if (stringHasValue(introspectedColumn.getTypeHandler())) {
                 resultElement.addAttribute(new Attribute(
@@ -101,6 +110,10 @@ public class ResultMapWithoutBLOBsElementGenerator extends
             columns = introspectedTable.getBaseColumns();
         }
         for (IntrospectedColumn introspectedColumn : columns) {
+            String actualColumnName = introspectedColumn.getActualColumnName();
+            if(actualColumnName.indexOf('_')==-1){//去除无需转换的字段
+                continue;
+            }
             XmlElement resultElement = new XmlElement("result"); //$NON-NLS-1$
 
             resultElement
@@ -108,8 +121,8 @@ public class ResultMapWithoutBLOBsElementGenerator extends
                             "column", MyBatis3FormattingUtilities.getRenamedColumnNameForResultMap(introspectedColumn))); //$NON-NLS-1$
             resultElement.addAttribute(new Attribute(
                     "property", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
-            resultElement.addAttribute(new Attribute("jdbcType", //$NON-NLS-1$
-                    introspectedColumn.getJdbcTypeName()));
+//            resultElement.addAttribute(new Attribute("jdbcType", //去除剩余字段jdbcType
+//                    introspectedColumn.getJdbcTypeName()));
 
             if (stringHasValue(introspectedColumn.getTypeHandler())) {
                 resultElement.addAttribute(new Attribute(

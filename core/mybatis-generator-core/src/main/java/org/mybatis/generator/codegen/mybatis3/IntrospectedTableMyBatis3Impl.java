@@ -206,6 +206,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
 
     /**
      * modified
+     * 获取mapper.xml文件信息
      * -isMergeable修改为false
      */
     @Override
@@ -213,6 +214,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
         List<GeneratedXmlFile> answer = new ArrayList<>();
 
         if (xmlMapperGenerator != null) {
+            //获取xml元素信息
             Document document = xmlMapperGenerator.getDocument();
             GeneratedXmlFile gxf = new GeneratedXmlFile(document,
                     getMyBatis3XmlMapperFileName(), getMyBatis3XmlMapperPackage(),
