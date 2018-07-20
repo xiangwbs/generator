@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -34,6 +34,11 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
         super();
     }
 
+    /**
+     * modified
+     * update
+     * -去除parameterType
+     */
     @Override
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
@@ -41,16 +46,16 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
         answer.addAttribute(new Attribute(
                 "id", introspectedTable.getUpdateByPrimaryKeySelectiveStatementId())); //$NON-NLS-1$
 
-        String parameterType;
-
-        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-            parameterType = introspectedTable.getRecordWithBLOBsType();
-        } else {
-            parameterType = introspectedTable.getBaseRecordType();
-        }
-
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType));
+//        String parameterType;
+//
+//        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+//            parameterType = introspectedTable.getRecordWithBLOBsType();
+//        } else {
+//            parameterType = introspectedTable.getBaseRecordType();
+//        }
+//
+//        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
+//                parameterType));
 
         context.getCommentGenerator().addComment(answer);
 

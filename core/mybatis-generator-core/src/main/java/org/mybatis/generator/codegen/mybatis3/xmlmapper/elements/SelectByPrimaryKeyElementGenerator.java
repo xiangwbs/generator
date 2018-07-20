@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -24,9 +24,9 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 /**
- * 
+ *
  * @author Jeff Butler
- * 
+ *
  */
 public class SelectByPrimaryKeyElementGenerator extends
         AbstractXmlElementGenerator {
@@ -35,6 +35,11 @@ public class SelectByPrimaryKeyElementGenerator extends
         super();
     }
 
+    /**
+     * modified
+     * findById
+     * -去除parameterType
+     */
     @Override
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
@@ -49,22 +54,22 @@ public class SelectByPrimaryKeyElementGenerator extends
                     introspectedTable.getBaseResultMapId()));
         }
 
-        String parameterType;
-        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
-            parameterType = introspectedTable.getPrimaryKeyType();
-        } else {
-            // PK fields are in the base class. If more than on PK
-            // field, then they are coming in a map.
-            if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
-                parameterType = "map"; //$NON-NLS-1$
-            } else {
-                parameterType = introspectedTable.getPrimaryKeyColumns().get(0)
-                        .getFullyQualifiedJavaType().toString();
-            }
-        }
-
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterType));
+//        String parameterType;
+//        if (introspectedTable.getRules().generatePrimaryKeyClass()) {
+//            parameterType = introspectedTable.getPrimaryKeyType();
+//        } else {
+//            // PK fields are in the base class. If more than on PK
+//            // field, then they are coming in a map.
+//            if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
+//                parameterType = "map"; //$NON-NLS-1$
+//            } else {
+//                parameterType = introspectedTable.getPrimaryKeyColumns().get(0)
+//                        .getFullyQualifiedJavaType().toString();
+//            }
+//        }
+//
+//        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
+//                parameterType));
 
         context.getCommentGenerator().addComment(answer);
 

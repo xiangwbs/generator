@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -36,27 +36,32 @@ public class DeleteByPrimaryKeyElementGenerator extends
         this.isSimple = isSimple;
     }
 
+    /**
+     * modified
+     * deletedById
+     * -去除parameterType
+     */
     @Override
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("delete"); //$NON-NLS-1$
 
         answer.addAttribute(new Attribute(
                 "id", introspectedTable.getDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$
-        String parameterClass;
-        if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
-            parameterClass = introspectedTable.getPrimaryKeyType();
-        } else {
-            // PK fields are in the base class. If more than on PK
-            // field, then they are coming in a map.
-            if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
-                parameterClass = "map"; //$NON-NLS-1$
-            } else {
-                parameterClass = introspectedTable.getPrimaryKeyColumns()
-                        .get(0).getFullyQualifiedJavaType().toString();
-            }
-        }
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterClass));
+//        String parameterClass;
+//        if (!isSimple && introspectedTable.getRules().generatePrimaryKeyClass()) {
+//            parameterClass = introspectedTable.getPrimaryKeyType();
+//        } else {
+//            // PK fields are in the base class. If more than on PK
+//            // field, then they are coming in a map.
+//            if (introspectedTable.getPrimaryKeyColumns().size() > 1) {
+//                parameterClass = "map"; //$NON-NLS-1$
+//            } else {
+//                parameterClass = introspectedTable.getPrimaryKeyColumns()
+//                        .get(0).getFullyQualifiedJavaType().toString();
+//            }
+//        }
+//        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
+//                parameterClass));
 
         context.getCommentGenerator().addComment(answer);
 

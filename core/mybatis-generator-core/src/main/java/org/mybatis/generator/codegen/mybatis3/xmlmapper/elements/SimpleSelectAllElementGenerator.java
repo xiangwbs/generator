@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2016 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,13 +15,9 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
-import java.util.Iterator;
-
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
-import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.StringUtility;
 
@@ -37,6 +33,10 @@ public class SimpleSelectAllElementGenerator extends
         super();
     }
 
+    /**
+     * findAll
+     * -替换allColumns为Base_Column_List
+     */
     @Override
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
@@ -49,26 +49,27 @@ public class SimpleSelectAllElementGenerator extends
         context.getCommentGenerator().addComment(answer);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("select "); //$NON-NLS-1$
-        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
-                .iterator();
-        while (iter.hasNext()) {
-            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
-                    .next()));
-
-            if (iter.hasNext()) {
-                sb.append(", "); //$NON-NLS-1$
-            }
-
-            if (sb.length() > 80) {
-                answer.addElement(new TextElement(sb.toString()));
-                sb.setLength(0);
-            }
-        }
-
+        sb.append("select ");
+        //遍历获取所有列
+//        Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
+//                .iterator();
+//        while (iter.hasNext()) {
+//            sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
+//                    .next()));
+//
+//            if (iter.hasNext()) {
+//                sb.append(", "); //$NON-NLS-1$
+//            }
+//
+//            if (sb.length() > 80) {
+//                answer.addElement(new TextElement(sb.toString()));
+//                sb.setLength(0);
+//            }
+//        }
         if (sb.length() > 0) {
             answer.addElement(new TextElement(sb.toString()));
         }
+        answer.addElement(getBaseColumnListElement());//添加Base_Column_List
 
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$

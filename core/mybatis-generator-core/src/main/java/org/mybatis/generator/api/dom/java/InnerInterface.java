@@ -82,7 +82,8 @@ public class InnerInterface extends JavaElement {
 
     /**
      * Gets the formatted content.
-     *
+     * modified
+     * -添加泛型类
      * @param indentLevel
      *            the indent level
      * @param compilationUnit the compilation unit
@@ -109,17 +110,17 @@ public class InnerInterface extends JavaElement {
         sb.append(getType().getShortName());
 
         if (getSuperInterfaceTypes().size() > 0) {
-            sb.append(" extends "); //$NON-NLS-1$
-
+            sb.append(" extends ");
             boolean comma = false;
             for (FullyQualifiedJavaType fqjt : getSuperInterfaceTypes()) {
                 if (comma) {
-                    sb.append(", "); //$NON-NLS-1$
+                    sb.append(", ");
                 } else {
                     comma = true;
                 }
-
                 sb.append(JavaDomUtils.calculateTypeName(compilationUnit, fqjt));
+                String model = getType().getShortName().replace("Mapper", "");
+                sb.append("<").append(model).append(">");
             }
         }
 
