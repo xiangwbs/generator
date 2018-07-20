@@ -48,6 +48,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
      * -自动生成创建时间
      * -或略modifier
      * -或略modified_time
+     * -替换able参数
      */
     @Override
     public void addElements(XmlElement parentElement) {
