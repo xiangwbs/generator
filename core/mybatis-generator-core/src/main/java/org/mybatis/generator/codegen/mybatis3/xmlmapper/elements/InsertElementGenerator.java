@@ -91,8 +91,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             }
         }
 
-        answer.addElement(new TextElement("insert into "));
-        answer.addElement(new TextElement(getTableStr()+"("));//替换table
+        answer.addElement(new TextElement("insert into "));//新增
+        answer.addElement(new TextElement(getTableStr()+"("));//新增:替换table
 
         StringBuilder insertClause = new StringBuilder();//fields
 //        insertClause.append("insert into ");
@@ -117,7 +117,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
             //create_time
-            if ("create_time".equalsIgnoreCase(actualColumnName)) {
+            if ("create_time".equalsIgnoreCase(actualColumnName)) {//新增
                 valuesClause.append("now()");
             } else {
                 valuesClause.append(MyBatis3FormattingUtilities
