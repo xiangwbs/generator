@@ -39,6 +39,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
      * 获取mapper.xml信息
      * -去除非必要方法,以及调整方法顺序
      * -添加findAll方法
+     * -添加addTableElement
      */
     protected XmlElement getSqlMapElement() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
@@ -51,28 +52,29 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
         context.getCommentGenerator().addRootComment(answer);
         //去除非必要方法,以及调整方法顺序
-        addResultMapWithoutBLOBsElement(answer);//获取resultMap信息
+        addResultMapWithoutBLOBsElement(answer);//BaseResultMap
+        addTableElement(answer);//新增Table
+        addBaseColumnListElement(answer);//Base_Column_List
         addResultMapWithBLOBsElement(answer);
         addExampleWhereClauseElement(answer);
         addMyBatis3UpdateByExampleWhereClauseElement(answer);
-        addBaseColumnListElement(answer);
         addBlobColumnListElement(answer);
-        addInsertElement(answer);
+        addInsertElement(answer);//insert
 //        addInsertSelectiveElement(answer);
-        addDeleteByPrimaryKeyElement(answer);
+        addDeleteByPrimaryKeyElement(answer);//deleteById
         addDeleteByExampleElement(answer);
-        addUpdateByPrimaryKeySelectiveElement(answer);
+        addUpdateByPrimaryKeySelectiveElement(answer);//update
         addUpdateByPrimaryKeyWithBLOBsElement(answer);
 //        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
         addUpdateByExampleSelectiveElement(answer);
         addUpdateByExampleWithBLOBsElement(answer);
         addUpdateByExampleWithoutBLOBsElement(answer);
-        addSelectByPrimaryKeyElement(answer);
+        addSelectByPrimaryKeyElement(answer);//findById
         addSelectByExampleWithBLOBsElement(answer);
         addSelectByExampleWithoutBLOBsElement(answer);
         addCountByExampleElement(answer);
         //新增findAll方法
-        addSelectAllElement(answer);
+        addSelectAllElement(answer);//findAll
         return answer;
     }
 
@@ -120,6 +122,17 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     protected void addBaseColumnListElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateBaseColumnList()) {
             AbstractXmlElementGenerator elementGenerator = new BaseColumnListElementGenerator();
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
+    /**
+     * modified
+     * addTableElement
+     */
+    protected void addTableElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateTable()) {
+            AbstractXmlElementGenerator elementGenerator = new TableElementGenerator();
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

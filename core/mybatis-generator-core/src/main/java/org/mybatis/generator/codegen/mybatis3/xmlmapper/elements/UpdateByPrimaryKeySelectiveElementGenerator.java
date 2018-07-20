@@ -23,9 +23,7 @@ import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public class UpdateByPrimaryKeySelectiveElementGenerator extends
         AbstractXmlElementGenerator {
@@ -38,6 +36,11 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
      * modified
      * update
      * -去除parameterType
+     * -替换table参数
+     * -忽略createTime
+     * -忽略creator
+     * -自动生成修改时间
+     * -替换if标签为普通文本
      */
     @Override
     public void addElements(XmlElement parentElement) {
@@ -61,31 +64,49 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append("update "); //$NON-NLS-1$
-        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+        sb.append("update ");
+//        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
+        answer.addElement(getTable());//替换table
 
         XmlElement dynamicElement = new XmlElement("set"); //$NON-NLS-1$
         answer.addElement(dynamicElement);
 
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable
                 .getNonPrimaryKeyColumns())) {
-            sb.setLength(0);
-            sb.append(introspectedColumn.getJavaProperty());
-            sb.append(" != null"); //$NON-NLS-1$
-            XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
-            isNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
-            dynamicElement.addElement(isNotNullElement);
-
-            sb.setLength(0);
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
-            sb.append(',');
-
-            isNotNullElement.addElement(new TextElement(sb.toString()));
+            String javaProperty = introspectedColumn.getJavaProperty();
+            //忽略createTime，creator
+            if ("createTime".equalsIgnoreCase(javaProperty) || "creator".equalsIgnoreCase(javaProperty)) {
+                continue;
+            }
+            if ("modifiedTime".equalsIgnoreCase(javaProperty)) {
+                sb.setLength(0);
+                sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+                sb.append("=now(),");
+                dynamicElement.addElement(new TextElement(sb.toString()));
+            } else {
+                sb.setLength(0);
+                sb.append("<if test=\"");
+                sb.append(javaProperty);
+                sb.append("!=null\">");
+                sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+                sb.append("=#{");
+                sb.append(javaProperty);
+                sb.append("},</if>");
+                dynamicElement.addElement(new TextElement(sb.toString()));
+//                sb.setLength(0);
+//                sb.append(javaProperty);
+//                sb.append(" != null"); //$NON-NLS-1$
+//                XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
+//                isNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
+//                dynamicElement.addElement(isNotNullElement);
+//                sb.setLength(0);
+//                sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+//                sb.append(" = "); //$NON-NLS-1$
+//                sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+//                sb.append(',');
+//                isNotNullElement.addElement(new TextElement(sb.toString()));
+            }
         }
 
         boolean and = false;

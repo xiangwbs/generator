@@ -82,22 +82,22 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 
         } else {
             //去除非必要方法已经调整方法顺序
-            addInsertMethod(interfaze);
+            addInsertMethod(interfaze);//insert
 //            addInsertSelectiveMethod(interfaze);
-            addDeleteByPrimaryKeyMethod(interfaze);
+            addDeleteByPrimaryKeyMethod(interfaze);//deleteById
             addDeleteByExampleMethod(interfaze);
-            addUpdateByPrimaryKeySelectiveMethod(interfaze);
+            addUpdateByPrimaryKeySelectiveMethod(interfaze);//update
             addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
 //        addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
             addUpdateByExampleSelectiveMethod(interfaze);
             addUpdateByExampleWithBLOBsMethod(interfaze);
             addUpdateByExampleWithoutBLOBsMethod(interfaze);
-            addSelectByPrimaryKeyMethod(interfaze);
+            addSelectByPrimaryKeyMethod(interfaze);//findById
             addSelectByExampleWithBLOBsMethod(interfaze);
             addSelectByExampleWithoutBLOBsMethod(interfaze);
             addCountByExampleMethod(interfaze);
             //新增findAll方法
-            addSelectAllMethod(interfaze);
+            addSelectAllMethod(interfaze);//findById
         }
 
         List<CompilationUnit> answer = new ArrayList<>();

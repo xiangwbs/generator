@@ -36,6 +36,7 @@ public class SimpleSelectAllElementGenerator extends
     /**
      * findAll
      * -替换allColumns为Base_Column_List
+     * -替换able参数
      */
     @Override
     public void addElements(XmlElement parentElement) {
@@ -72,11 +73,11 @@ public class SimpleSelectAllElementGenerator extends
         answer.addElement(getBaseColumnListElement());//添加Base_Column_List
 
         sb.setLength(0);
-        sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append("from ");
+//        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
-        
+        answer.addElement(getTable());//替换table
+
         String orderByClause = introspectedTable.getTableConfigurationProperty(PropertyRegistry.TABLE_SELECT_ALL_ORDER_BY_CLAUSE);
         boolean hasOrderBy = StringUtility.stringHasValue(orderByClause);
         if (hasOrderBy) {

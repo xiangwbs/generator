@@ -39,6 +39,7 @@ public class SelectByPrimaryKeyElementGenerator extends
      * modified
      * findById
      * -去除parameterType
+     * -替换table参数
      */
     @Override
     public void addElements(XmlElement parentElement) {
@@ -90,10 +91,10 @@ public class SelectByPrimaryKeyElementGenerator extends
         }
 
         sb.setLength(0);
-        sb.append("from "); //$NON-NLS-1$
-        sb.append(introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append("from ");
+//        sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
+        answer.addElement(getTable());//替换table
 
         boolean and = false;
         for (IntrospectedColumn introspectedColumn : introspectedTable

@@ -46,6 +46,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
      * -去除parameterType
      * -添加换行
      * -自动生成创建时间
+     * -或略modifier
+     * -或略modified_time
      */
     @Override
     public void addElements(XmlElement parentElement) {
@@ -102,11 +104,17 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
+
+            //或略modifier,modified_time
+            String actualColumnName = introspectedColumn.getActualColumnName();
+            if ("modifier".equalsIgnoreCase(actualColumnName) || "modified_time".equalsIgnoreCase(actualColumnName)) {
+                continue;
+            }
+
             insertClause.append("\n        ");//新增换行
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
             valuesClause.append("\n        ");//新增换行
-            String actualColumnName = introspectedColumn.getActualColumnName();
             //create_time
             if ("create_time".equalsIgnoreCase(actualColumnName)) {
                 valuesClause.append("now()");

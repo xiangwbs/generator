@@ -40,6 +40,7 @@ public class DeleteByPrimaryKeyElementGenerator extends
      * modified
      * deletedById
      * -去除parameterType
+     * -替换table参数
      */
     @Override
     public void addElements(XmlElement parentElement) {
@@ -67,8 +68,9 @@ public class DeleteByPrimaryKeyElementGenerator extends
 
         StringBuilder sb = new StringBuilder();
         sb.append("delete from "); //$NON-NLS-1$
-        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
+//        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
+        answer.addElement(getTable());//替换table
 
         boolean and = false;
         for (IntrospectedColumn introspectedColumn : introspectedTable

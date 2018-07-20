@@ -445,6 +445,20 @@ public abstract class BaseRules implements Rules {
                 || generateSelectByExampleWithoutBLOBs();
     }
 
+    /**
+     * modified
+     * generateTable
+     */
+    @Override
+    public boolean generateTable() {
+        if (isModelOnly) {
+            return false;
+        }
+
+        return generateSelectByPrimaryKey()
+                || generateBaseResultMap();
+    }
+
     @Override
     public boolean generateBlobColumnList() {
         if (isModelOnly) {

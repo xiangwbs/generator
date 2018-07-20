@@ -151,6 +151,12 @@ public interface Rules {
     boolean generateBaseColumnList();
 
     /**
+     * modified
+     * generateTable
+     */
+    boolean generateTable();
+
+    /**
      * Implements the rule for generating the SQL blob column list element.
      * Generate the element if any of the select methods are enabled, and the
      * table contains BLOB columns.

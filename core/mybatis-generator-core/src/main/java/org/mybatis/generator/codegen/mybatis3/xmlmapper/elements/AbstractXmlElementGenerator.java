@@ -23,9 +23,7 @@ import org.mybatis.generator.codegen.AbstractGenerator;
 import org.mybatis.generator.config.GeneratedKey;
 
 /**
- * 
  * @author Jeff Butler
- * 
  */
 public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
     public abstract void addElements(XmlElement parentElement);
@@ -39,29 +37,27 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
      * 获取主键信息
      * This method should return an XmlElement for the select key used to
      * automatically generate keys.
-     * 
-     * @param introspectedColumn
-     *            the column related to the select key statement
-     * @param generatedKey
-     *            the generated key for the current table
+     *
+     * @param introspectedColumn the column related to the select key statement
+     * @param generatedKey       the generated key for the current table
      * @return the selectKey element
      */
     protected XmlElement getSelectKey(IntrospectedColumn introspectedColumn,
-            GeneratedKey generatedKey) {
+                                      GeneratedKey generatedKey) {
         String identityColumnType = introspectedColumn
                 .getFullyQualifiedJavaType().getFullyQualifiedName();
 
         XmlElement answer = new XmlElement("selectKey"); //$NON-NLS-1$
         //简化resultType
-        answer.addAttribute(new Attribute("resultType", identityColumnType.substring(identityColumnType.lastIndexOf(".")+1).toLowerCase()));
+        answer.addAttribute(new Attribute("resultType", identityColumnType.substring(identityColumnType.lastIndexOf(".") + 1).toLowerCase()));
 //        answer.addAttribute(new Attribute("resultType", identityColumnType)); //$NON-NLS-1$
         answer.addAttribute(new Attribute(
                 "keyProperty", introspectedColumn.getJavaProperty())); //$NON-NLS-1$
         answer.addAttribute(new Attribute("order", //$NON-NLS-1$
-                generatedKey.getMyBatis3Order())); 
-        
+                generatedKey.getMyBatis3Order()));
+
         answer.addElement(new TextElement(generatedKey
-                        .getRuntimeSqlStatement()));
+                .getRuntimeSqlStatement()));
 
         return answer;
     }
@@ -102,5 +98,16 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
         ifElement.addElement(includeElement);
 
         return ifElement;
+    }
+
+    /**
+     * modified
+     * getTable
+     */
+    protected XmlElement getTable() {
+        XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
+                introspectedTable.getTableId()));
+        return answer;
     }
 }
