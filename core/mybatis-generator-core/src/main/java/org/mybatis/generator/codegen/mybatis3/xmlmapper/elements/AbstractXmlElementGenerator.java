@@ -110,4 +110,15 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
                 introspectedTable.getTableId()));
         return answer;
     }
+
+    /**
+     * modified
+     * getTableStr
+     */
+    protected String getTableStr() {
+        StringBuilder sb = new StringBuilder("<include refid=\"");
+        sb.append(introspectedTable.getTableId());
+        sb.append("\"/>");
+        return sb.toString();
+    }
 }

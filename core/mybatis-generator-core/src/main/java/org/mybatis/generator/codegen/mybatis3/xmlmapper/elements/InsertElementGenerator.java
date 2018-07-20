@@ -70,7 +70,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 //                parameterType.getFullyQualifiedName()));
 
         context.getCommentGenerator().addComment(answer);
-
+        //添加自动主键策略
         GeneratedKey gk = introspectedTable.getGeneratedKey();
         if (gk != null) {
             IntrospectedColumn introspectedColumn = introspectedTable
@@ -91,17 +91,19 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
             }
         }
 
-        StringBuilder insertClause = new StringBuilder();//insert into table()
+        answer.addElement(new TextElement("insert into "));
+        answer.addElement(new TextElement(getTableStr()+"("));//替换table
 
-        insertClause.append("insert into ");
-        insertClause.append(introspectedTable
-                .getFullyQualifiedTableNameAtRuntime());
-        insertClause.append(" (");
+        StringBuilder insertClause = new StringBuilder();//fields
+//        insertClause.append("insert into ");
+//        insertClause.append(introspectedTable
+//                .getFullyQualifiedTableNameAtRuntime());
+//        insertClause.append(" (");
 
-        StringBuilder valuesClause = new StringBuilder();
-        valuesClause.append("values (");
+        StringBuilder valuesClause = new StringBuilder();//values()
+//        valuesClause.append("values (");
 
-        List<String> valuesClauses = new ArrayList<>();//values()
+        List<String> valuesClauses = new ArrayList<>();
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
@@ -112,10 +114,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                 continue;
             }
 
-            insertClause.append("\n        ");//新增换行
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
-            valuesClause.append("\n        ");//新增换行
             //create_time
             if ("create_time".equalsIgnoreCase(actualColumnName)) {
                 valuesClause.append("now()");
@@ -127,6 +127,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
                 insertClause.append(", ");
                 valuesClause.append(", ");
             }
+            insertClause.append("\n        ");//新增换行
+            valuesClause.append("\n        ");//新增换行
 
 //            if (valuesClause.length() > 80) {//长度大于80换行
 //                answer.addElement(new TextElement(insertClause.toString()));
@@ -141,6 +143,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
         insertClause.append(')');
         answer.addElement(new TextElement(insertClause.toString()));
+
+        answer.addElement(new TextElement("values ("));//新增
 
         valuesClause.append(')');
         valuesClauses.add(valuesClause.toString());
