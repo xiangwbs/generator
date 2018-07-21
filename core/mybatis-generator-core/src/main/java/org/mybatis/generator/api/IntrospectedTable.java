@@ -57,6 +57,8 @@ public abstract class IntrospectedTable {
      * modified
      * 所有属性key
      * -新增table属性
+     * -新增deleteByIds属性
+     * -新增findByIds属性
      */
     protected enum InternalAttribute {
         ATTR_PRIMARY_KEY_TYPE,
@@ -78,12 +80,14 @@ public abstract class IntrospectedTable {
         ATTR_COUNT_BY_EXAMPLE_STATEMENT_ID,
         ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID,
         ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID,
+        ATTR_DELETE_BY_IDS_STATEMENT_ID,//新增deleteByIds属性
         ATTR_INSERT_STATEMENT_ID,
         ATTR_INSERT_SELECTIVE_STATEMENT_ID,
         ATTR_SELECT_ALL_STATEMENT_ID,
         ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID,
         ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
         ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID,
+        ATTR_SELECT_BY_IDS_STATEMENT_ID,//新增findByIds属性
         ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID,
         ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID,
         ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
@@ -502,12 +506,14 @@ public abstract class IntrospectedTable {
         setCountByExampleStatementId("countByExample"); //$NON-NLS-1$
         setDeleteByExampleStatementId("deleteByExample"); //$NON-NLS-1$
         setDeleteByPrimaryKeyStatementId("deleteById");
+        setDeleteByIdsStatementId("deleteByIds");//新增deleteByIds
         setInsertStatementId("insert"); //$NON-NLS-1$
         setInsertSelectiveStatementId("insertSelective"); //$NON-NLS-1$
         setSelectAllStatementId("findAll");
         setSelectByExampleStatementId("selectByExample"); //$NON-NLS-1$
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs"); //$NON-NLS-1$
         setSelectByPrimaryKeyStatementId("findById");
+        setSelectByIdsStatementId("findByIds");
         setUpdateByExampleStatementId("updateByExample"); //$NON-NLS-1$
         setUpdateByExampleSelectiveStatementId("updateByExampleSelective"); //$NON-NLS-1$
         setUpdateByExampleWithBLOBsStatementId("updateByExampleWithBLOBs"); //$NON-NLS-1$
@@ -600,6 +606,15 @@ public abstract class IntrospectedTable {
                 InternalAttribute.ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID, s);
     }
 
+    /**
+     * modified
+     * setSelectByIdsStatementId
+     */
+    public void setSelectByIdsStatementId(String s) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_SELECT_BY_IDS_STATEMENT_ID, s);
+    }
+
     public void setSelectByExampleWithBLOBsStatementId(String s) {
         internalAttributes
                 .put(
@@ -629,6 +644,15 @@ public abstract class IntrospectedTable {
     public void setDeleteByPrimaryKeyStatementId(String s) {
         internalAttributes.put(
                 InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID, s);
+    }
+
+    /**
+     * modified
+     * setDeleteByIdsStatementId
+     */
+    public void setDeleteByIdsStatementId(String s) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_DELETE_BY_IDS_STATEMENT_ID, s);
     }
 
     public void setDeleteByExampleStatementId(String s) {
@@ -715,6 +739,15 @@ public abstract class IntrospectedTable {
                 .get(InternalAttribute.ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID);
     }
 
+    /**
+     * modified
+     * getSelectByIdsStatementId
+     */
+    public String getSelectByIdsStatementId() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_SELECT_BY_IDS_STATEMENT_ID);
+    }
+
     public String getSelectByExampleWithBLOBsStatementId() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);
@@ -743,6 +776,15 @@ public abstract class IntrospectedTable {
     public String getDeleteByPrimaryKeyStatementId() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID);
+    }
+
+    /**
+     * modified
+     * getDeleteByIdsStatementId
+     */
+    public String getDeleteByIdsStatementId() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_DELETE_BY_IDS_STATEMENT_ID);
     }
 
     public String getDeleteByExampleStatementId() {

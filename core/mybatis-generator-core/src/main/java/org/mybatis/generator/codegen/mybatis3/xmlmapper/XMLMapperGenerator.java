@@ -40,6 +40,8 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
      * -去除非必要方法,以及调整方法顺序
      * -添加findAll方法
      * -添加addTableElement
+     * -添加deleteByIds方法
+     * -添加findByIds方法
      */
     protected XmlElement getSqlMapElement() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
@@ -62,6 +64,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addInsertElement(answer);//insert
 //        addInsertSelectiveElement(answer);
         addDeleteByPrimaryKeyElement(answer);//deleteById
+        addDeleteByIdsElement(answer);//新增deleteByIds
         addDeleteByExampleElement(answer);
         addUpdateByPrimaryKeySelectiveElement(answer);//update
         addUpdateByPrimaryKeyWithBLOBsElement(answer);
@@ -70,11 +73,11 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addUpdateByExampleWithBLOBsElement(answer);
         addUpdateByExampleWithoutBLOBsElement(answer);
         addSelectByPrimaryKeyElement(answer);//findById
+        addSelectByIdsElement(answer);//新增findByIds
         addSelectByExampleWithBLOBsElement(answer);
         addSelectByExampleWithoutBLOBsElement(answer);
         addCountByExampleElement(answer);
-        //新增findAll方法
-        addSelectAllElement(answer);//findAll
+        addSelectAllElement(answer);//新增findAll
         return answer;
     }
 
@@ -166,6 +169,17 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         }
     }
 
+    /**
+     * modified
+     * addSelectByIdsElement
+     */
+    protected void addSelectByIdsElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateSelectByIds()) {
+            AbstractXmlElementGenerator elementGenerator = new SelectByIdsElementGenerator();
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
     protected void addDeleteByExampleElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateDeleteByExample()) {
             AbstractXmlElementGenerator elementGenerator = new DeleteByExampleElementGenerator();
@@ -176,6 +190,17 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     protected void addDeleteByPrimaryKeyElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateDeleteByPrimaryKey()) {
             AbstractXmlElementGenerator elementGenerator = new DeleteByPrimaryKeyElementGenerator(false);
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
+    /**
+     * modified
+     * addDeleteByIdsElement
+     */
+    protected void addDeleteByIdsElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateDeleteByIdsKey()) {
+            AbstractXmlElementGenerator elementGenerator = new DeleteByIdsElementGenerator(false);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

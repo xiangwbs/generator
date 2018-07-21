@@ -49,8 +49,10 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
      * modified
      * 获取mapper.java信息
      * -去除非必要方法,以及调整方法顺序
-     * -添加findAll方法
      * -实现baseMapper,无需添加基本方法
+     * -添加findAll方法
+     * -添加findByIds方法
+     * -添加deleteByIds方法
      */
     @Override
     public List<CompilationUnit> getCompilationUnits() {
@@ -85,6 +87,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             addInsertMethod(interfaze);//insert
 //            addInsertSelectiveMethod(interfaze);
             addDeleteByPrimaryKeyMethod(interfaze);//deleteById
+            addDeleteByIdsMethod(interfaze);//新增deleteByIds
             addDeleteByExampleMethod(interfaze);
             addUpdateByPrimaryKeySelectiveMethod(interfaze);//update
             addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
@@ -93,11 +96,11 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             addUpdateByExampleWithBLOBsMethod(interfaze);
             addUpdateByExampleWithoutBLOBsMethod(interfaze);
             addSelectByPrimaryKeyMethod(interfaze);//findById
+            addSelectByIdsMethod(interfaze);//新增findByIds
             addSelectByExampleWithBLOBsMethod(interfaze);
             addSelectByExampleWithoutBLOBsMethod(interfaze);
             addCountByExampleMethod(interfaze);
-            //新增findAll方法
-            addSelectAllMethod(interfaze);//findById
+            addSelectAllMethod(interfaze);//新增findAll
         }
 
         List<CompilationUnit> answer = new ArrayList<>();
@@ -144,6 +147,13 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         }
     }
 
+    protected void addDeleteByIdsMethod(Interface interfaze) {
+        if (introspectedTable.getRules().generateDeleteByIdsKey()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByIdsMethodGenerator(false);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
+    }
+
     protected void addInsertMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new InsertMethodGenerator(false);
@@ -175,6 +185,17 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     protected void addSelectByPrimaryKeyMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateSelectByPrimaryKey()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new SelectByPrimaryKeyMethodGenerator(false);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
+    }
+
+    /**
+     * modified
+     * addSelectByIdsMethod
+     */
+    protected void addSelectByIdsMethod(Interface interfaze) {
+        if (introspectedTable.getRules().generateSelectByIds()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new SelectByIdsMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
