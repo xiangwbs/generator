@@ -111,6 +111,16 @@ public class RulesDelegate implements Rules {
         return rules.generateInsert();
     }
 
+    /**
+     * modified
+     * generateInsertBatch
+     * @return
+     */
+    @Override
+    public boolean generateInsertBatch() {
+        return rules.generateInsert();
+    }
+
     @Override
     public boolean generateInsertSelective() {
         return rules.generateInsertSelective();

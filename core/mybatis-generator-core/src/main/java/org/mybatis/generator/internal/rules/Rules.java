@@ -37,6 +37,13 @@ public interface Rules {
     boolean generateInsert();
 
     /**
+     * modified
+     * generateInsertBatch
+     * @return
+     */
+    boolean generateInsertBatch();
+
+    /**
      * Implements the rule for generating the insert selective SQL Map element
      * and DAO method. If the insert statement is allowed, then generate the
      * element and method.

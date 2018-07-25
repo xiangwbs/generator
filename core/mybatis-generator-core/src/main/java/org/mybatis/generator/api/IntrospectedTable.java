@@ -59,6 +59,7 @@ public abstract class IntrospectedTable {
      * -新增table属性
      * -新增deleteByIds属性
      * -新增findByIds属性
+     * -新增insertBatch属性
      */
     protected enum InternalAttribute {
         ATTR_PRIMARY_KEY_TYPE,
@@ -82,6 +83,7 @@ public abstract class IntrospectedTable {
         ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_DELETE_BY_IDS_STATEMENT_ID,//新增deleteByIds属性
         ATTR_INSERT_STATEMENT_ID,
+        ATTR_INSERT_BATCH_STATEMENT_ID,//新增insertBatch
         ATTR_INSERT_SELECTIVE_STATEMENT_ID,
         ATTR_SELECT_ALL_STATEMENT_ID,
         ATTR_SELECT_BY_EXAMPLE_STATEMENT_ID,
@@ -508,6 +510,7 @@ public abstract class IntrospectedTable {
         setDeleteByPrimaryKeyStatementId("deleteById");
         setDeleteByIdsStatementId("deleteByIds");//新增deleteByIds
         setInsertStatementId("insert"); //$NON-NLS-1$
+        setInsertBatchStatementId("insertBatch"); //新增insertBatch
         setInsertSelectiveStatementId("insertSelective"); //$NON-NLS-1$
         setSelectAllStatementId("findAll");
         setSelectByExampleStatementId("selectByExample"); //$NON-NLS-1$
@@ -641,6 +644,14 @@ public abstract class IntrospectedTable {
         internalAttributes.put(InternalAttribute.ATTR_INSERT_STATEMENT_ID, s);
     }
 
+    /**
+     * modified
+     * setInsertBatchStatementId
+     */
+    public void setInsertBatchStatementId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_INSERT_BATCH_STATEMENT_ID, s);
+    }
+
     public void setDeleteByPrimaryKeyStatementId(String s) {
         internalAttributes.put(
                 InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID, s);
@@ -771,6 +782,16 @@ public abstract class IntrospectedTable {
     public String getInsertStatementId() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_INSERT_STATEMENT_ID);
+    }
+
+    /**
+     * modifed
+     * getInsertBatchStatementId
+     * @return
+     */
+    public String getInsertBatchStatementId() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_INSERT_BATCH_STATEMENT_ID);
     }
 
     public String getDeleteByPrimaryKeyStatementId() {

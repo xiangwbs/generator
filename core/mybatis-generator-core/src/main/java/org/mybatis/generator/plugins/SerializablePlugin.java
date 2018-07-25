@@ -103,9 +103,17 @@ public class SerializablePlugin extends PluginAdapter {
             boolean imp = true;
             if (superClass != null) {
                 try {
-                    Class.forName(superClass.getFullyQualifiedName()).getDeclaredMethod("serialVersionUID");
-                    imp = false;
-                } catch (NoSuchMethodException | ClassNotFoundException ignored) {
+                    Class<?>[] interfaces = Class.forName(superClass.getFullyQualifiedName()).getInterfaces();
+                    if (interfaces.length != 0) {
+                        for (Class<?> anInterface : interfaces) {
+                            String simpleName = anInterface.getSimpleName();
+                            if ("Serializable".equals(simpleName)) {
+                                imp = false;
+                                break;
+                            }
+                        }
+                    }
+                } catch (ClassNotFoundException ignored) {
                 }
             }
             if (imp) {//实现serializable接口

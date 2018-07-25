@@ -42,6 +42,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
      * -添加addTableElement
      * -添加deleteByIds方法
      * -添加findByIds方法
+     * -添加insertBatch方法
      */
     protected XmlElement getSqlMapElement() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
@@ -62,12 +63,13 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addMyBatis3UpdateByExampleWhereClauseElement(answer);
         addBlobColumnListElement(answer);
         addInsertElement(answer);//insert
+        addInsertBatchElement(answer);//新增insertBatch
 //        addInsertSelectiveElement(answer);
         addDeleteByPrimaryKeyElement(answer);//deleteById
         addDeleteByIdsElement(answer);//新增deleteByIds
         addDeleteByExampleElement(answer);
         addUpdateByPrimaryKeySelectiveElement(answer);//update
-        addUpdateByPrimaryKeyWithBLOBsElement(answer);
+//        addUpdateByPrimaryKeyWithBLOBsElement(answer);
 //        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
         addUpdateByExampleSelectiveElement(answer);
         addUpdateByExampleWithBLOBsElement(answer);
@@ -208,6 +210,17 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     protected void addInsertElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractXmlElementGenerator elementGenerator = new InsertElementGenerator(false);
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
+    /**
+     * modified
+     * addInsertBatchElement
+     */
+    protected void addInsertBatchElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateInsert()) {
+            AbstractXmlElementGenerator elementGenerator = new InsertBatchElementGenerator(false);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

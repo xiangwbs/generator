@@ -63,6 +63,20 @@ public abstract class BaseRules implements Rules {
     }
 
     /**
+     * modified
+     * generateInsertBatch
+     * @return
+     */
+    @Override
+    public boolean generateInsertBatch() {
+        if (isModelOnly) {
+            return false;
+        }
+
+        return tableConfiguration.isInsertStatementEnabled();
+    }
+
+    /**
      * Implements the rule for generating the insert selective SQL Map element
      * and DAO method. If the insert statement is allowed, then generate the
      * element and method.
