@@ -64,7 +64,7 @@ public class DeleteByIdsMethodGenerator extends
                 importedTypes.add(type);
                 FullyQualifiedJavaType paramType = FullyQualifiedJavaType.getNewListInstance();
                 paramType.addTypeArgument(type);
-                Parameter parameter = new Parameter(paramType, "ids");
+                Parameter parameter = new Parameter(paramType, introspectedColumn.getJavaProperty()+"s");
                 if (annotate) {
                     sb.setLength(0);
                     sb.append("@Param(\"");

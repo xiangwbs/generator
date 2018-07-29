@@ -75,11 +75,12 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable
                 .getNonPrimaryKeyColumns())) {
             String javaProperty = introspectedColumn.getJavaProperty();
+            String columnName = MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
             //忽略createTime，creator
-            if ("createTime".equalsIgnoreCase(javaProperty) || "creator".equalsIgnoreCase(javaProperty)) {
+            if ("create_time".equalsIgnoreCase(columnName) || "creator".equalsIgnoreCase(columnName)) {
                 continue;
             }
-            if ("modifiedTime".equalsIgnoreCase(javaProperty)) {
+            if ("modified_time".equalsIgnoreCase(columnName)) {
                 sb.setLength(0);
                 sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
                 sb.append("=now(),");

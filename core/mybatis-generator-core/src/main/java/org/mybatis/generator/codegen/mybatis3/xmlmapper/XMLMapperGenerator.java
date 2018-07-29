@@ -43,6 +43,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
      * -添加deleteByIds方法
      * -添加findByIds方法
      * -添加insertBatch方法
+     * -添加updateBatch方法
      */
     protected XmlElement getSqlMapElement() {
         FullyQualifiedTable table = introspectedTable.getFullyQualifiedTable();
@@ -69,6 +70,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addDeleteByIdsElement(answer);//新增deleteByIds
         addDeleteByExampleElement(answer);
         addUpdateByPrimaryKeySelectiveElement(answer);//update
+        addUpdateBatchByPrimaryKeySelectiveElement(answer);//新增updateBatch
 //        addUpdateByPrimaryKeyWithBLOBsElement(answer);
 //        addUpdateByPrimaryKeyWithoutBLOBsElement(answer);
         addUpdateByExampleSelectiveElement(answer);
@@ -265,6 +267,18 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
             XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
             AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeySelectiveElementGenerator();
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
+    /**
+     * modified
+     * addUpdateBatchByPrimaryKeySelectiveElement
+     */
+    protected void addUpdateBatchByPrimaryKeySelectiveElement(
+            XmlElement parentElement) {
+        if (introspectedTable.getRules().generateUpdateBatchByPrimaryKeySelective()) {
+            AbstractXmlElementGenerator elementGenerator = new UpdateBatchByPrimaryKeySelectiveElementGenerator();
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

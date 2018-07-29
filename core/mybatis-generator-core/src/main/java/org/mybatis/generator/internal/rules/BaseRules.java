@@ -192,6 +192,29 @@ public abstract class BaseRules implements Rules {
     }
 
     /**
+     * modified
+     * generateUpdateBatchByPrimaryKeySelective
+     * @return
+     */
+    @Override
+    public boolean generateUpdateBatchByPrimaryKeySelective() {
+        if (isModelOnly) {
+            return false;
+        }
+
+        if (ListUtilities.removeGeneratedAlwaysColumns(introspectedTable.getNonPrimaryKeyColumns()).isEmpty()) {
+            return false;
+        }
+
+        boolean rc = tableConfiguration.isUpdateByPrimaryKeyStatementEnabled()
+                && introspectedTable.hasPrimaryKeyColumns()
+                && (introspectedTable.hasBLOBColumns() || introspectedTable
+                .hasBaseColumns());
+
+        return rc;
+    }
+
+    /**
      * Implements the rule for generating the delete by primary key SQL Map
      * element and DAO method. If the table has a primary key, and the
      * deleteByPrimaryKey statement is allowed, then generate the element and

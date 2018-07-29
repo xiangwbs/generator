@@ -39,6 +39,7 @@ public interface Rules {
     /**
      * modified
      * generateInsertBatch
+     *
      * @return
      */
     boolean generateInsertBatch();
@@ -91,6 +92,12 @@ public interface Rules {
      * @return true if the element and method should be generated
      */
     boolean generateUpdateByPrimaryKeySelective();
+
+    /**
+     * modified
+     * generateUpdateBatchByPrimaryKeySelective
+     */
+    boolean generateUpdateBatchByPrimaryKeySelective();
 
     /**
      * Implements the rule for generating the delete by primary key SQL Map

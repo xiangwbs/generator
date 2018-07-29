@@ -54,6 +54,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
      * -添加findByIds方法
      * -添加deleteByIds方法
      * -添加insertBatch方法
+     * -添加updateBatch方法
      */
     @Override
     public List<CompilationUnit> getCompilationUnits() {
@@ -92,6 +93,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             addDeleteByIdsMethod(interfaze);//新增deleteByIds
             addDeleteByExampleMethod(interfaze);
             addUpdateByPrimaryKeySelectiveMethod(interfaze);//update
+            addUpdateBatchByPrimaryKeySelectiveMethod(interfaze);//新增updateBatch
 //            addUpdateByPrimaryKeyWithBLOBsMethod(interfaze);
 //            addUpdateByPrimaryKeyWithoutBLOBsMethod(interfaze);
             addUpdateByExampleSelectiveMethod(interfaze);
@@ -162,7 +164,8 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }
- protected void addInsertBatchMethod(Interface interfaze) {
+
+    protected void addInsertBatchMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateInsert()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new InsertBatchMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
@@ -232,6 +235,18 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     protected void addUpdateByPrimaryKeySelectiveMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeySelective()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new UpdateByPrimaryKeySelectiveMethodGenerator();
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
+    }
+
+    /**
+     * modified
+     * addUpdateBatchByPrimaryKeySelectiveMethod
+     * @param interfaze
+     */
+    protected void addUpdateBatchByPrimaryKeySelectiveMethod(Interface interfaze) {
+        if (introspectedTable.getRules().generateUpdateBatchByPrimaryKeySelective()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new UpdateBatchByPrimaryKeySelectiveMethodGenerator();
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }

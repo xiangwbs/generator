@@ -60,6 +60,7 @@ public abstract class IntrospectedTable {
      * -新增deleteByIds属性
      * -新增findByIds属性
      * -新增insertBatch属性
+     * -新增updateBatch属性
      */
     protected enum InternalAttribute {
         ATTR_PRIMARY_KEY_TYPE,
@@ -95,6 +96,7 @@ public abstract class IntrospectedTable {
         ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
         ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,
+        ATTR_UPDATE_BATCH_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,//新增updateBatch属性
         ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID,
         ATTR_BASE_RESULT_MAP_ID,
         ATTR_RESULT_MAP_WITH_BLOBS_ID,
@@ -522,6 +524,7 @@ public abstract class IntrospectedTable {
         setUpdateByExampleWithBLOBsStatementId("updateByExampleWithBLOBs"); //$NON-NLS-1$
         setUpdateByPrimaryKeyStatementId("updateByPrimaryKey"); //$NON-NLS-1$
         setUpdateByPrimaryKeySelectiveStatementId("update");
+        setUpdateBatchByPrimaryKeySelectiveStatementId("updateBatch");
         setUpdateByPrimaryKeyWithBLOBsStatementId("updateByPrimaryKeyWithBLOBs"); //$NON-NLS-1$
         setBaseResultMapId("BaseResultMap"); //$NON-NLS-1$
         setResultMapWithBLOBsId("ResultMapWithBLOBs"); //$NON-NLS-1$
@@ -579,6 +582,16 @@ public abstract class IntrospectedTable {
                 .put(
                         InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,
                         s);
+    }
+
+    /**
+     * modified
+     * setUpdateBatchByPrimaryKeySelectiveStatementId
+     */
+    public void setUpdateBatchByPrimaryKeySelectiveStatementId(String s) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_UPDATE_BATCH_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,
+                s);
     }
 
     public void setUpdateByPrimaryKeyStatementId(String s) {
@@ -730,6 +743,17 @@ public abstract class IntrospectedTable {
                 .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID);
     }
 
+    /**
+     * modified
+     * getUpdateBatchByPrimaryKeyStatementId
+     *
+     * @return
+     */
+    public String getUpdateBatchByPrimaryKeyStatementId() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_UPDATE_BATCH_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID);
+    }
+
     public String getUpdateByExampleWithBLOBsStatementId() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID);
@@ -787,6 +811,7 @@ public abstract class IntrospectedTable {
     /**
      * modifed
      * getInsertBatchStatementId
+     *
      * @return
      */
     public String getInsertBatchStatementId() {

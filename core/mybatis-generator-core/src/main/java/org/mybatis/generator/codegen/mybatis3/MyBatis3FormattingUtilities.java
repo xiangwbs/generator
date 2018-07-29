@@ -56,6 +56,15 @@ public class MyBatis3FormattingUtilities {
 
     /**
      * modified
+     * getBatchParameterClauseOnly
+     */
+    public static String getBatchParameterClauseOnly(
+            IntrospectedColumn introspectedColumn) {
+        return getBatchParameterClauseOnly(introspectedColumn, null);
+    }
+
+    /**
+     * modified
      * -去除jdbcType
      * Gets the parameter clause.
      *
@@ -100,6 +109,23 @@ public class MyBatis3FormattingUtilities {
             sb.append(introspectedColumn.getTypeHandler());
         }
         sb.append('}');
+        return sb.toString();
+    }
+
+    /**
+     * modified
+     * getBatchParameterClauseOnly
+     */
+    public static String getBatchParameterClauseOnly(
+            IntrospectedColumn introspectedColumn, String prefix) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("obj.");
+        sb.append(introspectedColumn.getJavaProperty(prefix));
+        if (stringHasValue(introspectedColumn.getTypeHandler())) {
+            sb.append(",typeHandler=");
+            sb.append(introspectedColumn.getTypeHandler());
+        }
         return sb.toString();
     }
 

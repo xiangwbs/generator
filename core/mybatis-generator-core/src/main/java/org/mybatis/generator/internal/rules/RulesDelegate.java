@@ -196,6 +196,11 @@ public class RulesDelegate implements Rules {
     }
 
     @Override
+    public boolean generateUpdateBatchByPrimaryKeySelective() {
+        return rules.generateUpdateByPrimaryKeySelective();
+    }
+
+    @Override
     public boolean generateUpdateByPrimaryKeyWithBLOBs() {
         return rules.generateUpdateByPrimaryKeyWithBLOBs();
     }

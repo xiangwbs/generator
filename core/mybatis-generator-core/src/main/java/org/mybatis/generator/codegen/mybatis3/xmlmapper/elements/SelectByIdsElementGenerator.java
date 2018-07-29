@@ -15,9 +15,11 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
@@ -89,7 +91,11 @@ public class SelectByIdsElementGenerator extends
         answer.addElement(getTable());//替换table
 
         sb.setLength(0);
-        sb.append("where id in");
+        sb.append("where ");
+        IntrospectedColumn introspectedColumn = introspectedTable.getPrimaryKeyColumns().get(0);
+        String key = MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
+        sb.append(key);
+        sb.append(" in");
         answer.addElement(new TextElement(sb.toString()));
 
         sb.setLength(0);
