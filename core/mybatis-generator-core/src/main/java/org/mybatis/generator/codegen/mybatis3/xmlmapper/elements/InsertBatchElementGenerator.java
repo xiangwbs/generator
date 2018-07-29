@@ -22,6 +22,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 import org.mybatis.generator.config.GeneratedKey;
+import org.mybatis.generator.config.PropertyRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,13 +65,18 @@ public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
             pkSqlStatement = gk.getRuntimeSqlStatement();
         }
         List<IntrospectedColumn> columns = ListUtilities.removeIdentityAndGeneratedAlwaysColumns(introspectedTable.getAllColumns());
+
+        //获取属性值
+        String createTime = context.getProperty(PropertyRegistry.COMMENT_CREATE_TIME);
+        String modifier = context.getProperty(PropertyRegistry.COMMENT_MODIFIER);
+        String modifiedTime = context.getProperty(PropertyRegistry.COMMENT_MODIFIED_TIME);
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
             String actualColumnName = introspectedColumn.getActualColumnName();
-            if ("modifier".equalsIgnoreCase(actualColumnName) || "modified_time".equalsIgnoreCase(actualColumnName)) {//忽略modifier,modified_time
+            if (modifier.equalsIgnoreCase(actualColumnName) || modifiedTime.equalsIgnoreCase(actualColumnName)) {//忽略modifier,modified_time
                 continue;
             }
-            if ("create_time".equalsIgnoreCase(actualColumnName)) {//添加创建时间
+            if (createTime.equalsIgnoreCase(actualColumnName)) {//添加创建时间
                 valuesClause.append("now()");
             } else if (hasPk) {
                 if (id.equals(actualColumnName)) {

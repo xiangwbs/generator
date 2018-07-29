@@ -21,6 +21,7 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
+import org.mybatis.generator.config.PropertyRegistry;
 
 /**
  * @author Jeff Butler
@@ -72,15 +73,19 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
         XmlElement dynamicElement = new XmlElement("set"); //$NON-NLS-1$
         answer.addElement(dynamicElement);
 
+        String createTime = context.getProperty(PropertyRegistry.COMMENT_CREATE_TIME);
+        String creator = context.getProperty(PropertyRegistry.COMMENT_CREATOR);
+        String modifiedTime = context.getProperty(PropertyRegistry.COMMENT_MODIFIED_TIME);
+
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable
                 .getNonPrimaryKeyColumns())) {
             String javaProperty = introspectedColumn.getJavaProperty();
             String columnName = MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
             //忽略createTime，creator
-            if ("create_time".equalsIgnoreCase(columnName) || "creator".equalsIgnoreCase(columnName)) {
+            if (createTime.equalsIgnoreCase(columnName) || creator.equalsIgnoreCase(columnName)) {
                 continue;
             }
-            if ("modified_time".equalsIgnoreCase(columnName)) {
+            if (modifiedTime.equalsIgnoreCase(columnName)) {
                 sb.setLength(0);
                 sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
                 sb.append("=now(),");

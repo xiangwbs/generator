@@ -21,6 +21,7 @@ import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.ListUtilities;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
+import org.mybatis.generator.config.PropertyRegistry;
 
 /**
  * modified
@@ -67,12 +68,15 @@ public class UpdateBatchByPrimaryKeySelectiveElementGenerator extends
         trims.addAttribute(new Attribute("suffixOverrides", ","));
         answer.addElement(trims);
 
+        String createTime = context.getProperty(PropertyRegistry.COMMENT_CREATE_TIME);
+        String creator = context.getProperty(PropertyRegistry.COMMENT_CREATOR);
+        String modifiedTime = context.getProperty(PropertyRegistry.COMMENT_MODIFIED_TIME);
+
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable
                 .getNonPrimaryKeyColumns())) {
-            String javaProperty = introspectedColumn.getJavaProperty();
             String columnName = MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
             //忽略createTime，creator
-            if ("createTime".equalsIgnoreCase(javaProperty) || "creator".equalsIgnoreCase(javaProperty)) {
+            if (createTime.equalsIgnoreCase(columnName) || creator.equalsIgnoreCase(columnName)) {
                 continue;
             }
             sb.setLength(0);
@@ -94,7 +98,7 @@ public class UpdateBatchByPrimaryKeySelectiveElementGenerator extends
             sb.append("=");
             sb.append(keyParam);
             sb.append(" then ");
-            if ("modified_time".equalsIgnoreCase(columnName)) {
+            if (modifiedTime.equalsIgnoreCase(columnName)) {
                 sb.append("now()");
                 foreach.addElement(new TextElement(sb.toString()));
             } else {
