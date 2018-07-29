@@ -93,6 +93,13 @@ public class TableConfiguration extends PropertyHolder {
 
     private List<IgnoredColumnPattern> ignoredColumnPatterns = new ArrayList<>();
 
+    /**
+     * modified
+     * -enableSelectByExample=false
+     * -enableDeleteByExample=false
+     * -enableCountByExample=false
+     * -enableUpdateByExample=false
+     */
     public TableConfiguration(Context context) {
         super();
 
@@ -103,12 +110,12 @@ public class TableConfiguration extends PropertyHolder {
 
         insertStatementEnabled = true;
         selectByPrimaryKeyStatementEnabled = true;
-        selectByExampleStatementEnabled = true;
+        selectByExampleStatementEnabled = false;//修改为false
         updateByPrimaryKeyStatementEnabled = true;
         deleteByPrimaryKeyStatementEnabled = true;
-        deleteByExampleStatementEnabled = true;
-        countByExampleStatementEnabled = true;
-        updateByExampleStatementEnabled = true;
+        deleteByExampleStatementEnabled = false;//修改为false
+        countByExampleStatementEnabled = false;//修改为false
+        updateByExampleStatementEnabled = false;//修改为false
     }
 
     public boolean isDeleteByPrimaryKeyStatementEnabled() {
