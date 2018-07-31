@@ -68,7 +68,7 @@ public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
 
         //获取属性值
         String createTime = context.getProperty(PropertyRegistry.COMMENT_CREATE_TIME);
-        String modifier = context.getProperty(PropertyRegistry.COMMENT_MODIFIER);
+        String modifier = context.getProperty(PropertyRegistry.INSERT_IGNORE);
         String modifiedTime = context.getProperty(PropertyRegistry.COMMENT_MODIFIED_TIME);
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);

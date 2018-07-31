@@ -74,7 +74,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
         answer.addElement(dynamicElement);
 
         String createTime = context.getProperty(PropertyRegistry.COMMENT_CREATE_TIME);
-        String creator = context.getProperty(PropertyRegistry.COMMENT_CREATOR);
+        String creator = context.getProperty(PropertyRegistry.UPDATE_IGNORE);
         String modifiedTime = context.getProperty(PropertyRegistry.COMMENT_MODIFIED_TIME);
 
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable

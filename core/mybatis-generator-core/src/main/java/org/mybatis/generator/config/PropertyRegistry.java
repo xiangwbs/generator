@@ -76,6 +76,6 @@ public class PropertyRegistry {
      */
     public static final String COMMENT_CREATE_TIME = "createTime";
     public static final String COMMENT_MODIFIED_TIME = "modifiedTime";
-    public static final String COMMENT_CREATOR = "creator";
-    public static final String COMMENT_MODIFIER = "modifier";
+    public static final String UPDATE_IGNORE = "updateIgnore";
+    public static final String INSERT_IGNORE = "insertIgnore";
 }

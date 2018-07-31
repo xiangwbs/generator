@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
@@ -109,7 +107,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
         //获取属性值
         String createTime = context.getProperty(PropertyRegistry.COMMENT_CREATE_TIME);
-        String modifier = context.getProperty(PropertyRegistry.COMMENT_MODIFIER);
+        String modifier = context.getProperty(PropertyRegistry.INSERT_IGNORE);
         String modifiedTime = context.getProperty(PropertyRegistry.COMMENT_MODIFIED_TIME);
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
