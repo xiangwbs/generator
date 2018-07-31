@@ -56,7 +56,7 @@ public class UpdateBatchByPrimaryKeySelectiveElementGenerator extends
         String keyColumnName = MyBatis3FormattingUtilities.getEscapedColumnName(primaryKeyColumn);
         String keyParam = MyBatis3FormattingUtilities.getBatchParameterClause(primaryKeyColumn);
 
-        StringBuilder ifSb=new StringBuilder();
+        StringBuilder ifSb = new StringBuilder();
         StringBuilder sb = new StringBuilder();
         sb.append("update ");
 //        sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
@@ -76,7 +76,7 @@ public class UpdateBatchByPrimaryKeySelectiveElementGenerator extends
                 .getNonPrimaryKeyColumns())) {
             String columnName = MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
             //忽略createTime，creator
-            if (createTime.equalsIgnoreCase(columnName) || creator.equalsIgnoreCase(columnName)) {
+            if ((createTime != null && createTime.equalsIgnoreCase(columnName)) || (creator != null && creator.equalsIgnoreCase(columnName))) {
                 continue;
             }
             sb.setLength(0);
@@ -98,7 +98,7 @@ public class UpdateBatchByPrimaryKeySelectiveElementGenerator extends
             sb.append("=");
             sb.append(keyParam);
             sb.append(" then ");
-            if (modifiedTime.equalsIgnoreCase(columnName)) {
+            if (modifiedTime != null && modifiedTime.equalsIgnoreCase(columnName)) {
                 sb.append("now()");
                 foreach.addElement(new TextElement(sb.toString()));
             } else {

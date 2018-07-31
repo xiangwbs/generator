@@ -91,7 +91,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         }
 
         answer.addElement(new TextElement("insert into "));//新增
-        answer.addElement(new TextElement(getTableStr()+"("));//新增:替换table
+        answer.addElement(new TextElement(getTableStr() + "("));//新增:替换table
 
         StringBuilder insertClause = new StringBuilder();//fields
 //        insertClause.append("insert into ");
@@ -114,14 +114,14 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
             //或略modifier,modified_time
             String actualColumnName = introspectedColumn.getActualColumnName();
-            if (modifier.equalsIgnoreCase(actualColumnName) || modifiedTime.equalsIgnoreCase(actualColumnName)) {
+            if ((modifier != null && modifier.equalsIgnoreCase(actualColumnName)) || (modifiedTime != null && modifiedTime.equalsIgnoreCase(actualColumnName))) {
                 continue;
             }
 
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
             //create_time
-            if (createTime.equalsIgnoreCase(actualColumnName)) {//新增
+            if (createTime != null && createTime.equalsIgnoreCase(actualColumnName)) {//新增
                 valuesClause.append("now()");
             } else {
                 valuesClause.append(MyBatis3FormattingUtilities

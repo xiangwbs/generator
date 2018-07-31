@@ -73,10 +73,10 @@ public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
             String actualColumnName = introspectedColumn.getActualColumnName();
-            if (modifier.equalsIgnoreCase(actualColumnName) || modifiedTime.equalsIgnoreCase(actualColumnName)) {//忽略modifier,modified_time
+            if ((modifier != null && modifier.equalsIgnoreCase(actualColumnName)) || (modifiedTime != null && modifiedTime.equalsIgnoreCase(actualColumnName))) {//忽略modifier,modified_time
                 continue;
             }
-            if (createTime.equalsIgnoreCase(actualColumnName)) {//添加创建时间
+            if (createTime != null && createTime.equalsIgnoreCase(actualColumnName)) {//添加创建时间
                 valuesClause.append("now()");
             } else if (hasPk) {
                 if (id.equals(actualColumnName)) {

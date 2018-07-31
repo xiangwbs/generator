@@ -82,10 +82,10 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
             String javaProperty = introspectedColumn.getJavaProperty();
             String columnName = MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
             //忽略createTime，creator
-            if (createTime.equalsIgnoreCase(columnName) || creator.equalsIgnoreCase(columnName)) {
+            if ((createTime != null && createTime.equalsIgnoreCase(columnName)) || (creator != null && creator.equalsIgnoreCase(columnName))) {
                 continue;
             }
-            if (modifiedTime.equalsIgnoreCase(columnName)) {
+            if (modifiedTime != null && modifiedTime.equalsIgnoreCase(columnName)) {
                 sb.setLength(0);
                 sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
                 sb.append("=now(),");
