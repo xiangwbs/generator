@@ -102,19 +102,20 @@ public class SerializablePlugin extends PluginAdapter {
             FullyQualifiedJavaType superClass = topLevelClass.getSuperClass();
             boolean imp = true;
             if (superClass != null) {
-                try {
-                    Class<?>[] interfaces = Class.forName(superClass.getFullyQualifiedName()).getInterfaces();
-                    if (interfaces.length != 0) {
-                        for (Class<?> anInterface : interfaces) {
-                            String simpleName = anInterface.getSimpleName();
-                            if ("Serializable".equals(simpleName)) {
-                                imp = false;
-                                break;
-                            }
-                        }
-                    }
-                } catch (ClassNotFoundException ignored) {
-                }
+//                try {
+//                    Class<?>[] interfaces = Class.forName(superClass.getFullyQualifiedName()).getInterfaces();
+//                    if (interfaces.length != 0) {
+//                        for (Class<?> anInterface : interfaces) {
+//                            String simpleName = anInterface.getSimpleName();
+//                            if ("Serializable".equals(simpleName)) {
+//                                imp = false;
+//                                break;
+//                            }
+//                        }
+//                    }
+//                } catch (ClassNotFoundException ignored) {
+//                }
+                imp = false;
             }
             if (imp) {//实现serializable接口
                 topLevelClass.addImportedType(serializable);

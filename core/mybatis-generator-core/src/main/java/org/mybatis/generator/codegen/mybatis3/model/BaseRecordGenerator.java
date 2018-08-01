@@ -37,6 +37,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.config.PropertyRegistry;
 
 /**
  * @author Jeff Butler
@@ -51,6 +52,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
      * modified
      * MyBatis3获取实体信息
      * -交换field和插件顺序
+     * -排除自定义基础属性
      *
      * @return
      */
@@ -94,15 +96,21 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                 topLevelClass, introspectedTable)) {
             answer.add(topLevelClass);
         }
+        //添加自定义基础属性
+        String baseProperties = context.getProperty(PropertyRegistry.BASE_FIELDS);
         //添加field
         String rootClass = getRootClass();
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
-            if (RootClassInfo.getInstance(rootClass, warnings)
-                    .containsProperty(introspectedColumn)) {
-                continue;
-            }
-
             Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
+            if (RootClassInfo.getInstance(rootClass, warnings).containsProperty(introspectedColumn)) {
+                continue;
+            } else {//排除自定义基础属性
+                String name = field.getName();
+                if (baseProperties != null && baseProperties.contains(name)) {
+                    continue;
+                }
+            }
+//            Field field = getJavaBeansField(introspectedColumn, context, introspectedTable);
             if (plugins.modelFieldGenerated(field, topLevelClass,
                     introspectedColumn, introspectedTable,
                     Plugin.ModelClassType.BASE_RECORD)) {

@@ -74,8 +74,10 @@ public class PropertyRegistry {
      * modified
      * 自定义属性
      */
-    public static final String COMMENT_CREATE_TIME = "createTimeField";
-    public static final String COMMENT_MODIFIED_TIME = "modifiedTimeField";
-    public static final String UPDATE_IGNORE = "updateIgnoreField";
-    public static final String INSERT_IGNORE = "insertIgnoreField";
+    public static final String COMMENT_CREATE_TIME = "createTimeColumn";
+    public static final String COMMENT_MODIFIED_TIME = "modifiedTimeColumn";
+    public static final String UPDATE_IGNORE = "updateIgnoreColumn";
+    public static final String INSERT_IGNORE = "insertIgnoreColumn";
+    public static final String BASE_FIELDS = "baseFields";
+
 }
