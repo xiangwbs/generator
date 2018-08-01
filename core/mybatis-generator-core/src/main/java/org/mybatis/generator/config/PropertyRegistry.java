@@ -79,5 +79,7 @@ public class PropertyRegistry {
     public static final String UPDATE_IGNORE = "updateIgnoreColumn";
     public static final String INSERT_IGNORE = "insertIgnoreColumn";
     public static final String BASE_FIELDS = "baseFields";
+    public static final String LOMBOK = "lombok";
+
 
 }

@@ -226,14 +226,12 @@ public class DefaultCommentGenerator implements CommentGenerator {
         if (suppressAllComments || !addRemarkComments) {
             return;
         }
-        topLevelClass.addJavaDocLine("import lombok.Data;");
         topLevelClass.addJavaDocLine("/**");
         topLevelClass.addJavaDocLine(" * @author: xiangwb");
         topLevelClass.addJavaDocLine(" * @date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
         String remarks = introspectedTable.getFullyQualifiedTable().getRemarks();
         topLevelClass.addJavaDocLine(" * @description: " + remarks);
         topLevelClass.addJavaDocLine(" */");
-        topLevelClass.addJavaDocLine("@Data");
 //        topLevelClass.addJavaDocLine("/**"); //$NON-NLS-1$
 //        String remarks = introspectedTable.getRemarks();
 //        if (addRemarkComments && StringUtility.stringHasValue(remarks)) {

@@ -80,6 +80,12 @@ public class InnerClass extends JavaElement {
      * The initialization blocks.
      */
     private List<InitializationBlock> initializationBlocks;
+    /**
+     * modified
+     *
+     * @Data注解
+     */
+    private boolean lombok;
 
     /**
      * Instantiates a new inner class.
@@ -96,6 +102,14 @@ public class InnerClass extends JavaElement {
         superInterfaceTypes = new HashSet<>();
         methods = new ArrayList<>();
         initializationBlocks = new ArrayList<>();
+    }
+
+    public boolean isLombok() {
+        return lombok;
+    }
+
+    public void setLombok(boolean lombok) {
+        this.lombok = lombok;
     }
 
     /**
@@ -241,6 +255,9 @@ public class InnerClass extends JavaElement {
         addFormattedAnnotations(sb, indentLevel);
 
         OutputUtilities.javaIndent(sb, indentLevel);
+        if (this.isLombok()) {
+            sb.append("@Data\n");
+        }
         sb.append(getVisibility().getValue());
 
         if (isAbstract()) {
@@ -320,18 +337,19 @@ public class InnerClass extends JavaElement {
         }
 
         if (methods.size() > 0) {
-//            OutputUtilities.newLine(sb);
+            OutputUtilities.newLine(sb);
         }
+
         //生成get/set方法
-//        Iterator<Method> mtdIter = methods.iterator();
-//        while (mtdIter.hasNext()) {
-//            OutputUtilities.newLine(sb);
-//            Method method = mtdIter.next();
-//            sb.append(method.getFormattedContent(indentLevel, false, compilationUnit));
-//            if (mtdIter.hasNext()) {
-//                OutputUtilities.newLine(sb);
-//            }
-//        }
+        Iterator<Method> mtdIter = methods.iterator();
+        while (mtdIter.hasNext()) {
+            OutputUtilities.newLine(sb);
+            Method method = mtdIter.next();
+            sb.append(method.getFormattedContent(indentLevel, false, compilationUnit));
+            if (mtdIter.hasNext()) {
+                OutputUtilities.newLine(sb);
+            }
+        }
 
         if (innerClasses.size() > 0) {
             OutputUtilities.newLine(sb);
