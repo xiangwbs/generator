@@ -55,6 +55,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
      * -添加deleteByIds方法
      * -添加insertBatch方法
      * -添加updateBatch方法
+     * -添加delete方法
      */
     @Override
     public List<CompilationUnit> getCompilationUnits() {
@@ -92,6 +93,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
 //            addInsertSelectiveMethod(interfaze);
             addDeleteByPrimaryKeyMethod(interfaze);//deleteById
             addDeleteByIdsMethod(interfaze);//新增deleteByIds
+            addDeleteMethod(interfaze);//新增delete
             addDeleteByExampleMethod(interfaze);
             addUpdateByPrimaryKeySelectiveMethod(interfaze);//update
             addUpdateBatchByPrimaryKeySelectiveMethod(interfaze);//新增updateBatch
@@ -155,6 +157,18 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     protected void addDeleteByIdsMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteByIdsKey()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new DeleteByIdsMethodGenerator(false);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
+    }
+
+    /**
+     * modified
+     * addDeleteMethod
+     * @param interfaze
+     */
+    protected void addDeleteMethod(Interface interfaze) {
+        if (introspectedTable.getRules().generateDeleteKey()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new DeleteMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }

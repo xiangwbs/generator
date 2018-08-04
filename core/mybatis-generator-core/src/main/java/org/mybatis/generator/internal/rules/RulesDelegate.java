@@ -101,6 +101,16 @@ public class RulesDelegate implements Rules {
         return rules.generateDeleteByPrimaryKey();
     }
 
+    /**
+     * modified
+     * generateDeleteKey
+     * @return
+     */
+    @Override
+    public boolean generateDeleteKey() {
+        return rules.generateDeleteKey();
+    }
+
     @Override
     public boolean generateExampleClass() {
         return rules.generateExampleClass();
@@ -154,6 +164,11 @@ public class RulesDelegate implements Rules {
     @Override
     public boolean generateSelectByPrimaryKey() {
         return rules.generateSelectByPrimaryKey();
+    }
+
+    @Override
+    public boolean generateSelect() {
+        return rules.generateSelect();
     }
 
     /**
@@ -218,6 +233,11 @@ public class RulesDelegate implements Rules {
     @Override
     public boolean generateBaseColumnList() {
         return rules.generateBaseColumnList();
+    }
+
+    @Override
+    public boolean generateCondition() {
+        return rules.generateCondition();
     }
 
     /**

@@ -40,8 +40,11 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
      * -去除非必要方法,以及调整方法顺序
      * -添加findAll方法
      * -添加addTableElement
+     * -添加addConditionElement
      * -添加deleteByIds方法
+     * -添加delete方法
      * -添加findByIds方法
+     * -添加find方法
      * -添加insertBatch方法
      * -添加updateBatch方法
      */
@@ -59,6 +62,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addResultMapWithoutBLOBsElement(answer);//BaseResultMap
         addTableElement(answer);//新增Table
         addBaseColumnListElement(answer);//Base_Column_List
+        addConditionElement(answer);//新增Condition
         addResultMapWithBLOBsElement(answer);
         addExampleWhereClauseElement(answer);
         addMyBatis3UpdateByExampleWhereClauseElement(answer);
@@ -68,6 +72,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 //        addInsertSelectiveElement(answer);
         addDeleteByPrimaryKeyElement(answer);//deleteById
         addDeleteByIdsElement(answer);//新增deleteByIds
+        addDeleteElement(answer);//新增delete
         addDeleteByExampleElement(answer);
         addUpdateByPrimaryKeySelectiveElement(answer);//update
         addUpdateBatchByPrimaryKeySelectiveElement(answer);//新增updateBatch
@@ -78,6 +83,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         addUpdateByExampleWithoutBLOBsElement(answer);
         addSelectByPrimaryKeyElement(answer);//findById
         addSelectByIdsElement(answer);//新增findByIds
+        addSelectElement(answer);//新增find
         addSelectByExampleWithBLOBsElement(answer);
         addSelectByExampleWithoutBLOBsElement(answer);
         addCountByExampleElement(answer);
@@ -135,6 +141,17 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     /**
      * modified
+     * addConditionElement
+     */
+    protected void addConditionElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateCondition()) {
+            AbstractXmlElementGenerator elementGenerator = new ConditionElementGenerator();
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
+    /**
+     * modified
      * addTableElement
      */
     protected void addTableElement(XmlElement parentElement) {
@@ -175,6 +192,17 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     /**
      * modified
+     * addSelectElement
+     */
+    protected void addSelectElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateSelect()) {
+            AbstractXmlElementGenerator elementGenerator = new SelectElementGenerator();
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
+    /**
+     * modified
      * addSelectByIdsElement
      */
     protected void addSelectByIdsElement(XmlElement parentElement) {
@@ -205,6 +233,17 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     protected void addDeleteByIdsElement(XmlElement parentElement) {
         if (introspectedTable.getRules().generateDeleteByIdsKey()) {
             AbstractXmlElementGenerator elementGenerator = new DeleteByIdsElementGenerator(false);
+            initializeAndExecuteGenerator(elementGenerator, parentElement);
+        }
+    }
+
+    /**
+     * modified
+     * addDeleteElement
+     */
+    protected void addDeleteElement(XmlElement parentElement) {
+        if (introspectedTable.getRules().generateDeleteKey()) {
+            AbstractXmlElementGenerator elementGenerator = new DeleteElementGenerator(false);
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

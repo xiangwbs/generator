@@ -116,6 +116,13 @@ public interface Rules {
     boolean generateDeleteByIdsKey();
 
     /**
+     * modified
+     * generateDeleteKey
+     * @return
+     */
+    boolean generateDeleteKey();
+
+    /**
      * Implements the rule for generating the delete by example SQL Map element
      * and DAO method. If the deleteByExample statement is allowed, then
      * generate the element and method.
@@ -172,6 +179,12 @@ public interface Rules {
 
     /**
      * modified
+     * generateCondition
+     */
+    boolean generateCondition();
+
+    /**
+     * modified
      * generateTable
      */
     boolean generateTable();
@@ -194,6 +207,12 @@ public interface Rules {
      * @return true if the element and method should be generated
      */
     boolean generateSelectByPrimaryKey();
+
+    /**
+     * modified
+     * generateSelect
+     */
+    boolean generateSelect();
 
     /**
      * modified

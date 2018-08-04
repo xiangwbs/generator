@@ -251,6 +251,21 @@ public abstract class BaseRules implements Rules {
     }
 
     /**
+     * modified
+     * generateDeleteKey
+     */
+    @Override
+    public boolean generateDeleteKey() {
+        if (isModelOnly) {
+            return false;
+        }
+
+        boolean rc = tableConfiguration.isDeleteStatementEnabled();
+
+        return rc;
+    }
+
+    /**
      * Implements the rule for generating the delete by example SQL Map element
      * and DAO method. If the deleteByExample statement is allowed, then
      * generate the element and method.
@@ -369,6 +384,21 @@ public abstract class BaseRules implements Rules {
                 && introspectedTable.hasPrimaryKeyColumns()
                 && (introspectedTable.hasBaseColumns() || introspectedTable
                 .hasBLOBColumns());
+
+        return rc;
+    }
+
+    /**
+     * modified
+     * generateSelect
+     */
+    @Override
+    public boolean generateSelect() {
+        if (isModelOnly) {
+            return false;
+        }
+
+        boolean rc = tableConfiguration.isSelectStatementEnabled();
 
         return rc;
     }
@@ -508,6 +538,20 @@ public abstract class BaseRules implements Rules {
 
     @Override
     public boolean generateBaseColumnList() {
+        if (isModelOnly) {
+            return false;
+        }
+
+        return generateSelectByPrimaryKey()
+                || generateSelectByExampleWithoutBLOBs();
+    }
+
+    /**
+     * modified
+     * generateCondition
+     */
+    @Override
+    public boolean generateCondition() {
         if (isModelOnly) {
             return false;
         }

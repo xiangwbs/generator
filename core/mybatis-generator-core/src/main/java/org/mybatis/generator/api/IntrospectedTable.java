@@ -61,6 +61,8 @@ public abstract class IntrospectedTable {
      * -新增findByIds属性
      * -新增insertBatch属性
      * -新增updateBatch属性
+     * -新增delete属性
+     * -新增find属性
      */
     protected enum InternalAttribute {
         ATTR_PRIMARY_KEY_TYPE,
@@ -83,6 +85,7 @@ public abstract class IntrospectedTable {
         ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID,
         ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_DELETE_BY_IDS_STATEMENT_ID,//新增deleteByIds属性
+        ATTR_DELETE_STATEMENT_ID,//新增delete属性
         ATTR_INSERT_STATEMENT_ID,
         ATTR_INSERT_BATCH_STATEMENT_ID,//新增insertBatch
         ATTR_INSERT_SELECTIVE_STATEMENT_ID,
@@ -91,6 +94,7 @@ public abstract class IntrospectedTable {
         ATTR_SELECT_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
         ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_SELECT_BY_IDS_STATEMENT_ID,//新增findByIds属性
+        ATTR_SELECT_STATEMENT_ID,//新增find属性
         ATTR_UPDATE_BY_EXAMPLE_STATEMENT_ID,
         ATTR_UPDATE_BY_EXAMPLE_SELECTIVE_STATEMENT_ID,
         ATTR_UPDATE_BY_EXAMPLE_WITH_BLOBS_STATEMENT_ID,
@@ -106,7 +110,8 @@ public abstract class IntrospectedTable {
         ATTR_MYBATIS3_UPDATE_BY_EXAMPLE_WHERE_CLAUSE_ID,
         ATTR_MYBATIS3_SQL_PROVIDER_TYPE,
         ATTR_MYBATIS_DYNAMIC_SQL_SUPPORT_TYPE,
-        ATTR_TABLE_ID//新增table属性
+        ATTR_TABLE_ID,//新增table属性
+        ATTR_CONDITION_ID//新增condition属性
     }
 
     protected TableConfiguration tableConfiguration;
@@ -497,6 +502,9 @@ public abstract class IntrospectedTable {
      * 设置所有方法名
      * -修改方法名
      * -新增table属性
+     * -新增delete属性
+     * -新增find属性
+     * -新增condition属性
      */
     protected void calculateXmlAttributes() {
         setMyBatis3XmlMapperFileName(calculateMyBatis3XmlMapperFileName());
@@ -511,6 +519,7 @@ public abstract class IntrospectedTable {
         setDeleteByExampleStatementId("deleteByExample"); //$NON-NLS-1$
         setDeleteByPrimaryKeyStatementId("deleteById");
         setDeleteByIdsStatementId("deleteByIds");//新增deleteByIds
+        setDeleteStatementId("delete");//新增delete
         setInsertStatementId("insert"); //$NON-NLS-1$
         setInsertBatchStatementId("insertBatch"); //新增insertBatch
         setInsertSelectiveStatementId("insertSelective"); //$NON-NLS-1$
@@ -519,6 +528,7 @@ public abstract class IntrospectedTable {
         setSelectByExampleWithBLOBsStatementId("selectByExampleWithBLOBs"); //$NON-NLS-1$
         setSelectByPrimaryKeyStatementId("findById");
         setSelectByIdsStatementId("findByIds");
+        setSelectStatementId("find");
         setUpdateByExampleStatementId("updateByExample"); //$NON-NLS-1$
         setUpdateByExampleSelectiveStatementId("updateByExampleSelective"); //$NON-NLS-1$
         setUpdateByExampleWithBLOBsStatementId("updateByExampleWithBLOBs"); //$NON-NLS-1$
@@ -533,6 +543,7 @@ public abstract class IntrospectedTable {
         setBlobColumnListId("Blob_Column_List"); //$NON-NLS-1$
         setMyBatis3UpdateByExampleWhereClauseId("Update_By_Example_Where_Clause"); //$NON-NLS-1$
         setTableId("Table");//新增table属性
+        setConditionId("Condition");//新增condition属性
     }
 
     /**
@@ -542,6 +553,14 @@ public abstract class IntrospectedTable {
     public void setTableId(String s) {
         internalAttributes.put(InternalAttribute.ATTR_TABLE_ID, s);
     }
+    /**
+     * modified
+     * setConditionId
+     */
+    public void setConditionId(String s) {
+        internalAttributes.put(InternalAttribute.ATTR_CONDITION_ID, s);
+    }
+
 
     public void setBlobColumnListId(String s) {
         internalAttributes.put(InternalAttribute.ATTR_BLOB_COLUMN_LIST_ID, s);
@@ -679,6 +698,22 @@ public abstract class IntrospectedTable {
                 InternalAttribute.ATTR_DELETE_BY_IDS_STATEMENT_ID, s);
     }
 
+    /**
+     * modified
+     * setDeleteStatementId
+     */
+    public void setDeleteStatementId(String s) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_DELETE_STATEMENT_ID, s);
+    }
+    /**
+     * modified
+     * setSelectStatementId
+     */
+    public void setSelectStatementId(String s) {
+        internalAttributes.put(
+                InternalAttribute.ATTR_SELECT_STATEMENT_ID, s);
+    }
     public void setDeleteByExampleStatementId(String s) {
         internalAttributes.put(
                 InternalAttribute.ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID, s);
@@ -696,6 +731,14 @@ public abstract class IntrospectedTable {
     public String getTableId() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_TABLE_ID);
+    }
+    /**
+     * modified
+     * getConditionId
+     */
+    public String getConditionId() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_CONDITION_ID);
     }
 
     public String getBlobColumnListId() {
@@ -833,6 +876,23 @@ public abstract class IntrospectedTable {
                 .get(InternalAttribute.ATTR_DELETE_BY_IDS_STATEMENT_ID);
     }
 
+
+    /**
+     * modified
+     * getDeleteStatementId
+     */
+    public String getDeleteStatementId() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_DELETE_STATEMENT_ID);
+    }
+    /**
+     * modified
+     * getSelectStatementId
+     */
+    public String getSelectStatementId() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_SELECT_STATEMENT_ID);
+    }
     public String getDeleteByExampleStatementId() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_DELETE_BY_EXAMPLE_STATEMENT_ID);

@@ -1,5 +1,5 @@
 /**
- *    Copyright 2006-2017 the original author or authors.
+ *    Copyright 2006-2018 the original author or authors.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -66,7 +66,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * This class parses configuration files into the new Configuration API.
- * 
+ *
  * @author Jeff Butler
  */
 public class MyBatisGeneratorConfigurationParser {
@@ -297,7 +297,18 @@ public class MyBatisGeneratorConfigurationParser {
             tc.setDeleteByPrimaryKeyStatementEnabled(
                     isTrue(enableDeleteByPrimaryKey));
         }
-
+        String enableDelete = attributes
+                .getProperty("enableDelete"); //$NON-NLS-1$
+        if (stringHasValue(enableDelete)) {
+            tc.setDeleteStatementEnabled(
+                    isTrue(enableDelete));
+        }
+        String enableSelect = attributes
+                .getProperty("enableSelect"); //$NON-NLS-1$
+        if (stringHasValue(enableSelect)) {
+            tc.setSelectStatementEnabled(
+                    isTrue(enableSelect));
+        }
         String enableDeleteByExample = attributes
                 .getProperty("enableDeleteByExample"); //$NON-NLS-1$
         if (stringHasValue(enableDeleteByExample)) {
@@ -794,10 +805,10 @@ public class MyBatisGeneratorConfigurationParser {
      * This method resolve a property from one of the three sources: system properties,
      * properties loaded from the &lt;properties&gt; configuration element, and
      * "extra" properties that may be supplied by the Maven or Ant environments.
-     * 
+     *
      * <p>If there is a name collision, system properties take precedence, followed by
      * configuration properties, followed by extra properties.
-     * 
+     *
      * @param key property key
      * @return the resolved property.  This method will return null if the property is
      *     undefined in any of the sources.

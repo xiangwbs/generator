@@ -48,6 +48,10 @@ public class TableConfiguration extends PropertyHolder {
 
     private boolean deleteByPrimaryKeyStatementEnabled;
 
+    private boolean deleteStatementEnabled;
+
+    private boolean selectStatementEnabled;
+
     private boolean deleteByExampleStatementEnabled;
 
     private boolean countByExampleStatementEnabled;
@@ -95,10 +99,13 @@ public class TableConfiguration extends PropertyHolder {
 
     /**
      * modified
+     * 方法配置
      * -enableSelectByExample=false
      * -enableDeleteByExample=false
      * -enableCountByExample=false
      * -enableUpdateByExample=false
+     * -deleteStatementEnabled=true
+     * -selectStatementEnabled=true
      */
     public TableConfiguration(Context context) {
         super();
@@ -109,10 +116,12 @@ public class TableConfiguration extends PropertyHolder {
         ignoredColumns = new HashMap<>();
 
         insertStatementEnabled = true;
-        selectByPrimaryKeyStatementEnabled = true;
-        selectByExampleStatementEnabled = false;//修改为false
-        updateByPrimaryKeyStatementEnabled = true;
         deleteByPrimaryKeyStatementEnabled = true;
+        deleteStatementEnabled = true;//新增
+        updateByPrimaryKeyStatementEnabled = true;
+        selectByPrimaryKeyStatementEnabled = true;
+        selectStatementEnabled = true;//新增
+        selectByExampleStatementEnabled = false;//修改为false
         deleteByExampleStatementEnabled = false;//修改为false
         countByExampleStatementEnabled = false;//修改为false
         updateByExampleStatementEnabled = false;//修改为false
@@ -122,9 +131,34 @@ public class TableConfiguration extends PropertyHolder {
         return deleteByPrimaryKeyStatementEnabled;
     }
 
+    /**
+     * modified
+     * isDeleteStatementEnabled
+     * @return
+     */
+    public boolean isDeleteStatementEnabled() {
+        return deleteStatementEnabled;
+    }
+
     public void setDeleteByPrimaryKeyStatementEnabled(
             boolean deleteByPrimaryKeyStatementEnabled) {
         this.deleteByPrimaryKeyStatementEnabled = deleteByPrimaryKeyStatementEnabled;
+    }
+
+    /**
+     * modified
+     * setDeleteStatementEnabled
+     */
+    public void setDeleteStatementEnabled(boolean deleteStatementEnabled) {
+        this.deleteStatementEnabled = deleteStatementEnabled;
+    }
+
+    /**
+     * modified
+     * setSelectStatementEnabled
+     */
+    public void setSelectStatementEnabled(boolean selectStatementEnabled) {
+        this.selectStatementEnabled = selectStatementEnabled;
     }
 
     public boolean isInsertStatementEnabled() {
@@ -138,7 +172,9 @@ public class TableConfiguration extends PropertyHolder {
     public boolean isSelectByPrimaryKeyStatementEnabled() {
         return selectByPrimaryKeyStatementEnabled;
     }
-
+    public boolean isSelectStatementEnabled() {
+        return selectStatementEnabled;
+    }
     public void setSelectByPrimaryKeyStatementEnabled(
             boolean selectByPrimaryKeyStatementEnabled) {
         this.selectByPrimaryKeyStatementEnabled = selectByPrimaryKeyStatementEnabled;
@@ -222,8 +258,7 @@ public class TableConfiguration extends PropertyHolder {
     /**
      * May return null if the column has not been overridden.
      *
-     * @param columnName
-     *            the column name
+     * @param columnName the column name
      * @return the column override (if any) related to this column
      */
     public ColumnOverride getColumnOverride(String columnName) {
@@ -333,9 +368,9 @@ public class TableConfiguration extends PropertyHolder {
      * Returns a List of Strings. The values are the columns
      * that were specified to be ignored in the table, but do not exist in the
      * table.
-     * 
+     *
      * @return a List of Strings - the columns that were improperly configured
-     *         as ignored columns
+     * as ignored columns
      */
     public List<String> getIgnoredColumnsInError() {
         List<String> answer = new ArrayList<>();
