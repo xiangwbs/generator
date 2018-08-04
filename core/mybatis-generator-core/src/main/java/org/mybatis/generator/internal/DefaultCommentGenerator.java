@@ -37,6 +37,9 @@ import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.util.StringUtility;
 
 /**
+ * modified
+ * -添加author属性
+ *
  * @author Jeff Butler
  */
 public class DefaultCommentGenerator implements CommentGenerator {
@@ -44,6 +47,8 @@ public class DefaultCommentGenerator implements CommentGenerator {
     private Properties properties;
 
     private boolean suppressDate;
+
+    private String author;
 
     private boolean suppressAllComments;
 
@@ -67,16 +72,20 @@ public class DefaultCommentGenerator implements CommentGenerator {
         // add no file level comments by default
     }
 
+    /**
+     * modified
+     * addJavaFileComment
+     */
     @Override
     public void addJavaFileComment(Interface anInterface, IntrospectedTable introspectedTable) {
         if (suppressAllComments || !addRemarkComments) {
             return;
         }
         anInterface.addJavaDocLine("/**");
-        anInterface.addJavaDocLine(" * @author: xiangwb");
-        anInterface.addJavaDocLine(" * @date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
         String remarks = introspectedTable.getFullyQualifiedTable().getRemarks();
-        anInterface.addJavaDocLine(" * @description: " + remarks);
+        anInterface.addJavaDocLine(" * @description " + remarks);
+        anInterface.addJavaDocLine(" * @author " + author);
+        anInterface.addJavaDocLine(" * @date " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
         anInterface.addJavaDocLine(" */");
     }
 
@@ -117,12 +126,20 @@ public class DefaultCommentGenerator implements CommentGenerator {
         // add no document level comments by default
     }
 
+    /**
+     * modified
+     * -添加author
+     *
+     * @param properties
+     */
     @Override
     public void addConfigurationProperties(Properties properties) {
         this.properties.putAll(properties);
 
         suppressDate = isTrue(properties
                 .getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_DATE));
+
+        author = properties.getProperty(PropertyRegistry.AUTHOR);
 
         suppressAllComments = isTrue(properties
                 .getProperty(PropertyRegistry.COMMENT_GENERATOR_SUPPRESS_ALL_COMMENTS));
@@ -232,10 +249,10 @@ public class DefaultCommentGenerator implements CommentGenerator {
             return;
         }
         topLevelClass.addJavaDocLine("/**");
-        topLevelClass.addJavaDocLine(" * @author: xiangwb");
-        topLevelClass.addJavaDocLine(" * @date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
         String remarks = introspectedTable.getFullyQualifiedTable().getRemarks();
-        topLevelClass.addJavaDocLine(" * @description: " + remarks);
+        topLevelClass.addJavaDocLine(" * @description " + remarks);
+        topLevelClass.addJavaDocLine(" * @author " + author);
+        topLevelClass.addJavaDocLine(" * @date " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
         topLevelClass.addJavaDocLine(" */");
 //        topLevelClass.addJavaDocLine("/**"); //$NON-NLS-1$
 //        String remarks = introspectedTable.getRemarks();

@@ -16,6 +16,8 @@
 package org.mybatis.generator.config;
 
 /**
+ * modified
+ * xmi配置参数
  * This class holds constants for all properties recognized by the different
  * configuration elements. This helps document and maintain the different
  * properties, and helps to avoid spelling errors.
@@ -80,6 +82,7 @@ public class PropertyRegistry {
     public static final String INSERT_IGNORE = "insertIgnoreColumn";
     public static final String BASE_FIELDS = "baseFields";
     public static final String LOMBOK = "lombok";
+    public static final String AUTHOR = "author";
 
 
 }
