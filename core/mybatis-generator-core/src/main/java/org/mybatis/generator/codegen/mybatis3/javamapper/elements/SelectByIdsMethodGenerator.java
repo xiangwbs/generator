@@ -41,16 +41,15 @@ public class SelectByIdsMethodGenerator extends
     @Override
     public void addInterfaceElements(Interface interfaze) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
-        //import list
-        importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
 
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
         FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
-        FullyQualifiedJavaType listType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+        importedTypes.add(returnType);//import list
+        FullyQualifiedJavaType modeType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         //import model
-        importedTypes.add(listType);
-        returnType.addTypeArgument(listType);
+        importedTypes.add(modeType);
+        returnType.addTypeArgument(modeType);
         method.setReturnType(returnType);
         method.setName(introspectedTable.getSelectByIdsStatementId());
 

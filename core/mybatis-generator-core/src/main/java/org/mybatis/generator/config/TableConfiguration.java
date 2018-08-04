@@ -140,6 +140,14 @@ public class TableConfiguration extends PropertyHolder {
         return deleteStatementEnabled;
     }
 
+    /**
+     * modified
+     * isFindStatementEnabled
+     * @return
+     */
+    public boolean isFindStatementEnabled() {
+        return selectStatementEnabled;
+    }
     public void setDeleteByPrimaryKeyStatementEnabled(
             boolean deleteByPrimaryKeyStatementEnabled) {
         this.deleteByPrimaryKeyStatementEnabled = deleteByPrimaryKeyStatementEnabled;

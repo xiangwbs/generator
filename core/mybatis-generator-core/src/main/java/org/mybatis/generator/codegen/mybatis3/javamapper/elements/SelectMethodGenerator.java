@@ -15,25 +15,23 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper.elements;
 
-import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.java.*;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 /**
  * modified
- * Delete
+ * find
  *
  * @author xiangwb
  */
-public class DeleteMethodGenerator extends
+public class SelectMethodGenerator extends
         AbstractJavaMapperMethodGenerator {
 
     private boolean isSimple;
 
-    public DeleteMethodGenerator(boolean isSimple) {
+    public SelectMethodGenerator(boolean isSimple) {
         super();
         this.isSimple = isSimple;
     }
@@ -41,13 +39,18 @@ public class DeleteMethodGenerator extends
     @Override
     public void addInterfaceElements(Interface interfaze) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
+
         Method method = new Method();
         method.setVisibility(JavaVisibility.PUBLIC);
-        method.setReturnType(FullyQualifiedJavaType.getIntInstance());
-        method.setName(introspectedTable.getDeleteStatementId());
-        importedTypes.add(FullyQualifiedJavaType.getNewMapInstance());
+        FullyQualifiedJavaType returnType = FullyQualifiedJavaType.getNewListInstance();
+        FullyQualifiedJavaType modelType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+        importedTypes.add(returnType);//import list
+        importedTypes.add(modelType);//import model
+        returnType.addTypeArgument(modelType);
+        method.setReturnType(returnType);
+        method.setName(introspectedTable.getSelectStatementId());
 
-
+        importedTypes.add(FullyQualifiedJavaType.getNewMapInstance());//import map
         FullyQualifiedJavaType paramType = FullyQualifiedJavaType.getNewMapInstance();
         paramType.addTypeArgument(FullyQualifiedJavaType.getStringInstance());
         paramType.addTypeArgument(FullyQualifiedJavaType.getObjectInstance());

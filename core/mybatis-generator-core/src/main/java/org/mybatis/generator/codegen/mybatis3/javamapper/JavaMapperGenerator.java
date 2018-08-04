@@ -15,12 +15,6 @@
  */
 package org.mybatis.generator.codegen.mybatis3.javamapper;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-import static org.mybatis.generator.internal.util.messages.Messages.getString;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.dom.java.CompilationUnit;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -31,6 +25,12 @@ import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.*;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
+import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 /**
  * @author Jeff Butler
@@ -56,6 +56,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
      * -添加insertBatch方法
      * -添加updateBatch方法
      * -添加delete方法
+     * -添加find方法
      */
     @Override
     public List<CompilationUnit> getCompilationUnits() {
@@ -104,6 +105,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             addUpdateByExampleWithoutBLOBsMethod(interfaze);
             addSelectByPrimaryKeyMethod(interfaze);//findById
             addSelectByIdsMethod(interfaze);//新增findByIds
+            addSelectMethod(interfaze);//新增find
             addSelectByExampleWithBLOBsMethod(interfaze);
             addSelectByExampleWithoutBLOBsMethod(interfaze);
             addCountByExampleMethod(interfaze);
@@ -169,6 +171,18 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     protected void addDeleteMethod(Interface interfaze) {
         if (introspectedTable.getRules().generateDeleteKey()) {
             AbstractJavaMapperMethodGenerator methodGenerator = new DeleteMethodGenerator(false);
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
+    }
+
+    /**
+     * modified
+     * addSelectMethod
+     * @param interfaze
+     */
+    protected void addSelectMethod(Interface interfaze) {
+        if (introspectedTable.getRules().generateSelect()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new SelectMethodGenerator(false);
             initializeAndExecuteGenerator(methodGenerator, interfaze);
         }
     }

@@ -65,6 +65,7 @@ public abstract class BaseRules implements Rules {
     /**
      * modified
      * generateInsertBatch
+     *
      * @return
      */
     @Override
@@ -194,6 +195,7 @@ public abstract class BaseRules implements Rules {
     /**
      * modified
      * generateUpdateBatchByPrimaryKeySelective
+     *
      * @return
      */
     @Override
