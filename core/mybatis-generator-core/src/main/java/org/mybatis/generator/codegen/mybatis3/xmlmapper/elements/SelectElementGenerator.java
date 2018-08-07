@@ -80,10 +80,10 @@ public class SelectElementGenerator extends
         }
         answer.addElement(new TextElement(sb.toString()));
         answer.addElement(getBaseColumnListElement());
-        if (introspectedTable.hasBLOBColumns()) {
-            answer.addElement(new TextElement(",")); //$NON-NLS-1$
-            answer.addElement(getBlobColumnListElement());
-        }
+//        if (introspectedTable.hasBLOBColumns()) {
+//            answer.addElement(new TextElement(",")); //$NON-NLS-1$
+//            answer.addElement(getBlobColumnListElement());
+//        }
 
         sb.setLength(0);
         sb.append("from ");

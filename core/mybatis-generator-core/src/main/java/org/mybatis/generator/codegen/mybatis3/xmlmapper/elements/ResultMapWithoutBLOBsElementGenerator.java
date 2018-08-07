@@ -107,7 +107,8 @@ public class ResultMapWithoutBLOBsElementGenerator extends
         if (isSimple) {
             columns = introspectedTable.getNonPrimaryKeyColumns();
         } else {
-            columns = introspectedTable.getBaseColumns();
+//            columns = introspectedTable.getBaseColumns();
+            columns = introspectedTable.getNonPrimaryKeyColumns();
         }
         for (IntrospectedColumn introspectedColumn : columns) {
             String actualColumnName = introspectedColumn.getActualColumnName();
