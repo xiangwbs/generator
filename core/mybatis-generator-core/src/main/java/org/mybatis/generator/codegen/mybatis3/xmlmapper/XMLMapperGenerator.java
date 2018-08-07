@@ -66,7 +66,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 //        addResultMapWithBLOBsElement(answer);
         addExampleWhereClauseElement(answer);
         addMyBatis3UpdateByExampleWhereClauseElement(answer);
-        addBlobColumnListElement(answer);
+//        addBlobColumnListElement(answer);
         addInsertElement(answer);//insert
         addInsertBatchElement(answer);//新增insertBatch
 //        addInsertSelectiveElement(answer);
