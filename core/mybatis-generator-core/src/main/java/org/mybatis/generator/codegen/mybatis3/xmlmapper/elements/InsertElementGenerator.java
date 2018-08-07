@@ -112,7 +112,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
 
-            //或略modifier
+            //忽略modifier
             String actualColumnName = introspectedColumn.getActualColumnName();
             if ((modifier != null && modifier.equalsIgnoreCase(actualColumnName))) {
                 continue;
