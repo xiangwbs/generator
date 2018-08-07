@@ -74,15 +74,15 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends
         answer.addElement(dynamicElement);
 
         String createTime = context.getProperty(PropertyRegistry.COMMENT_CREATE_TIME);
-        String creator = context.getProperty(PropertyRegistry.UPDATE_IGNORE);
+        String ignore = context.getProperty(PropertyRegistry.UPDATE_IGNORE);
         String modifiedTime = context.getProperty(PropertyRegistry.COMMENT_MODIFIED_TIME);
 
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable
                 .getNonPrimaryKeyColumns())) {
             String javaProperty = introspectedColumn.getJavaProperty();
             String columnName = MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn);
-            //忽略createTime，creator
-            if ((createTime != null && createTime.equalsIgnoreCase(columnName)) || (creator != null && creator.equalsIgnoreCase(columnName))) {
+            //忽略createTime，ignore
+            if ((createTime != null && createTime.equalsIgnoreCase(columnName)) || (ignore != null && ignore.equalsIgnoreCase(columnName))) {
                 continue;
             }
             if (modifiedTime != null && modifiedTime.equalsIgnoreCase(columnName)) {

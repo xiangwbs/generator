@@ -107,14 +107,14 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
         //获取属性值
         String createTime = context.getProperty(PropertyRegistry.COMMENT_CREATE_TIME);
-        String modifier = context.getProperty(PropertyRegistry.INSERT_IGNORE);
+        String ignore = context.getProperty(PropertyRegistry.INSERT_IGNORE);
         String modifiedTime = context.getProperty(PropertyRegistry.COMMENT_MODIFIED_TIME);
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
 
-            //忽略modifier
+            //忽略
             String actualColumnName = introspectedColumn.getActualColumnName();
-            if ((modifier != null && modifier.equalsIgnoreCase(actualColumnName))) {
+            if ((ignore != null && ignore.equalsIgnoreCase(actualColumnName))) {
                 continue;
             }
 

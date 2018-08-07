@@ -1,17 +1,17 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2006-2018 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
@@ -68,15 +68,15 @@ public class InsertBatchElementGenerator extends AbstractXmlElementGenerator {
 
         //获取属性值
         String createTime = context.getProperty(PropertyRegistry.COMMENT_CREATE_TIME);
-        String modifier = context.getProperty(PropertyRegistry.INSERT_IGNORE);
+        String ignore = context.getProperty(PropertyRegistry.INSERT_IGNORE);
         String modifiedTime = context.getProperty(PropertyRegistry.COMMENT_MODIFIED_TIME);
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
             String actualColumnName = introspectedColumn.getActualColumnName();
-            if ((modifier != null && modifier.equalsIgnoreCase(actualColumnName)) || (modifiedTime != null && modifiedTime.equalsIgnoreCase(actualColumnName))) {//忽略modifier,modified_time
+            if ((ignore != null && ignore.equalsIgnoreCase(actualColumnName))) {//忽略
                 continue;
             }
-            if (createTime != null && createTime.equalsIgnoreCase(actualColumnName)) {//添加创建时间
+            if ((createTime != null && createTime.equalsIgnoreCase(actualColumnName)) || (modifiedTime != null && modifiedTime.equalsIgnoreCase(actualColumnName))) {
                 valuesClause.append("now()");
             } else if (hasPk) {
                 if (id.equals(actualColumnName)) {
