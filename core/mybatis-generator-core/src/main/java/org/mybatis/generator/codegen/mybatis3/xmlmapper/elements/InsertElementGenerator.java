@@ -1,17 +1,17 @@
 /**
- *    Copyright 2006-2018 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Copyright 2006-2018 the original author or authors.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
@@ -45,8 +45,8 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
      * -去除parameterType
      * -添加换行
      * -自动生成创建时间
-     * -或略modifier
-     * -或略modified_time
+     * -忽略modifier
+     * -忽略modified_time
      * -替换able参数
      */
     @Override
@@ -112,16 +112,16 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         for (int i = 0; i < columns.size(); i++) {
             IntrospectedColumn introspectedColumn = columns.get(i);
 
-            //或略modifier,modified_time
+            //或略modifier
             String actualColumnName = introspectedColumn.getActualColumnName();
-            if ((modifier != null && modifier.equalsIgnoreCase(actualColumnName)) || (modifiedTime != null && modifiedTime.equalsIgnoreCase(actualColumnName))) {
+            if ((modifier != null && modifier.equalsIgnoreCase(actualColumnName))) {
                 continue;
             }
 
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
-            //create_time
-            if (createTime != null && createTime.equalsIgnoreCase(actualColumnName)) {//新增
+            //create_time，modified_time
+            if ((createTime != null && createTime.equalsIgnoreCase(actualColumnName)) || modifiedTime != null && modifiedTime.equalsIgnoreCase(actualColumnName)) {//新增
                 valuesClause.append("now()");
             } else {
                 valuesClause.append(MyBatis3FormattingUtilities
