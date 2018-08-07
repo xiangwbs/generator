@@ -74,7 +74,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /**
      * modified
-     * addJavaFileComment
+     * Java.mapper文件注释
      */
     @Override
     public void addJavaFileComment(Interface anInterface, IntrospectedTable introspectedTable) {
@@ -128,6 +128,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /**
      * modified
+     * 初始化配置文件注释信息
      * -添加author
      *
      * @param properties
@@ -337,7 +338,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /**
      * modified
-     * 其他字段注释
+     * 实体类其他字段注释
      */
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable) {
@@ -362,7 +363,7 @@ public class DefaultCommentGenerator implements CommentGenerator {
 
     /**
      * modified
-     * mapper.java注释
+     * mapper.java所有方法注释
      */
     @Override
     public void addGeneralMethodComment(Method method,
