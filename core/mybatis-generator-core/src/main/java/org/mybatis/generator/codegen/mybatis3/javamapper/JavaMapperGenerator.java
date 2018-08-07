@@ -57,6 +57,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
      * -添加updateBatch方法
      * -添加delete方法
      * -添加find方法
+     * -添加父类是否是泛型
      */
     @Override
     public List<CompilationUnit> getCompilationUnits() {
@@ -83,9 +84,15 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
                     rootInterface);
             interfaze.addSuperInterface(fqjt);
             interfaze.addImportedType(fqjt);
-            //import model
-            FullyQualifiedJavaType model = introspectedTable.getRules().calculateAllFieldsClass();
-            interfaze.addImportedType(model);
+            //添加父类是否是泛型
+            String generics = context.getJavaClientGeneratorConfiguration()
+                    .getProperty(PropertyRegistry.ANY_ROOT_INTERFACE_GENERICS);
+            if ("true".equalsIgnoreCase(generics)) {
+                //新增 import model
+                FullyQualifiedJavaType model = introspectedTable.getRules().calculateAllFieldsClass();
+                interfaze.addImportedType(model);
+                interfaze.setGenerics(model.getShortName());
+            }
 
         } else {
             //去除非必要方法已经调整方法顺序

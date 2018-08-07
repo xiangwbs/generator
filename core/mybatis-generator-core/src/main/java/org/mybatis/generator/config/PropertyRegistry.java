@@ -18,6 +18,7 @@ package org.mybatis.generator.config;
 /**
  * modified
  * xmi配置参数
+ * -添加泛型类
  * This class holds constants for all properties recognized by the different
  * configuration elements. This helps document and maintain the different
  * properties, and helps to avoid spelling errors.
@@ -39,6 +40,7 @@ public class PropertyRegistry {
      * recognized by table and java client generator
      */
     public static final String ANY_ROOT_INTERFACE = "rootInterface"; //$NON-NLS-1$
+    public static final String ANY_ROOT_INTERFACE_GENERICS = "rootGenerics";//新增泛型类
 
     public static final String TABLE_USE_COLUMN_INDEXES = "useColumnIndexes"; //$NON-NLS-1$
     public static final String TABLE_USE_ACTUAL_COLUMN_NAMES = "useActualColumnNames"; //$NON-NLS-1$

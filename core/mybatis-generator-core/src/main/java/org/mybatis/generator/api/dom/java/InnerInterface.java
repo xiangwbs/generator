@@ -27,6 +27,8 @@ import java.util.Set;
 import org.mybatis.generator.api.dom.OutputUtilities;
 
 /**
+ * modified
+ * -新增泛型类
  * The Class Interface.
  *
  * @author Jeff Butler
@@ -46,6 +48,10 @@ public class InnerInterface extends JavaElement {
 
     /** The methods. */
     private List<Method> methods;
+    /**
+     * 泛型类
+     */
+    private String generics;
 
     /**
      * Instantiates a new interface.
@@ -119,8 +125,11 @@ public class InnerInterface extends JavaElement {
                     comma = true;
                 }
                 sb.append(JavaDomUtils.calculateTypeName(compilationUnit, fqjt));
-                String model = getType().getShortName().replace("Mapper", "");
-                sb.append("<").append(model).append(">");
+                String generics = this.getGenerics();
+                if (generics != null) {
+//                    String model = getType().getShortName().replace("Mapper", "");
+                    sb.append("<").append(generics).append(">");
+                }
             }
         }
 
@@ -253,5 +262,13 @@ public class InnerInterface extends JavaElement {
      */
     public boolean isJavaEnumeration() {
         return false;
+    }
+
+    public String getGenerics() {
+        return generics;
+    }
+
+    public void setGenerics(String generics) {
+        this.generics = generics;
     }
 }
