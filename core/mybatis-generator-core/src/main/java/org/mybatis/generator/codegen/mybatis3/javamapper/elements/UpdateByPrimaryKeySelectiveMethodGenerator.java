@@ -36,18 +36,24 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
         super();
     }
 
+    /**
+     * modified
+     * -去除WithBLOBsType
+     * @param interfaze
+     */
     @Override
     public void addInterfaceElements(Interface interfaze) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         FullyQualifiedJavaType parameterType;
 
-        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getRecordWithBLOBsType());
-        } else {
-            parameterType = new FullyQualifiedJavaType(introspectedTable
-                    .getBaseRecordType());
-        }
+//        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+//            parameterType = new FullyQualifiedJavaType(introspectedTable
+//                    .getRecordWithBLOBsType());
+//        } else {
+//            parameterType = new FullyQualifiedJavaType(introspectedTable
+//                    .getBaseRecordType());
+//        }
+        parameterType=introspectedTable.getRules().calculateAllFieldsClass();
 
         importedTypes.add(parameterType);
 

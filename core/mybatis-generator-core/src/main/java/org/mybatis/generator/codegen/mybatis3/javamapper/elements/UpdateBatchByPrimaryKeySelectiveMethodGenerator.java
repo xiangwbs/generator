@@ -33,16 +33,22 @@ public class UpdateBatchByPrimaryKeySelectiveMethodGenerator extends
         super();
     }
 
+    /**
+     * modified
+     * -去除WithBLOBsType
+     * @param interfaze
+     */
     @Override
     public void addInterfaceElements(Interface interfaze) {
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
         FullyQualifiedJavaType recordType;
-        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-            recordType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
-        } else {
-            recordType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-        }
+//        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+//            recordType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
+//        } else {
+//            recordType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+//        }
+        recordType=introspectedTable.getRules().calculateAllFieldsClass();
         importedTypes.add(recordType);
 
         Method method = new Method();
