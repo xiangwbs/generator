@@ -21,6 +21,7 @@ import static org.mybatis.generator.internal.util.JavaBeansUtil.getJavaBeansSett
 import static org.mybatis.generator.internal.util.messages.Messages.getString;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -115,7 +116,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                 continue;
             } else {//排除自定义基础属性
                 String name = field.getName();
-                if (baseProperties != null && baseProperties.contains(name)) {
+                if (baseProperties != null && Arrays.asList(baseProperties.split(",")).contains(name)) {
                     continue;
                 }
             }
@@ -225,21 +226,20 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
      */
     private List<IntrospectedColumn> getColumnsInThisClass() {
         List<IntrospectedColumn> introspectedColumns;
-//        if (includePrimaryKeyColumns()) {
-//            if (includeBLOBColumns()) {
-//                introspectedColumns = introspectedTable.getAllColumns();
-//            } else {
-//                introspectedColumns = introspectedTable.getNonBLOBColumns();
-//            }
-//        } else {
-//            if (includeBLOBColumns()) {
-//                introspectedColumns = introspectedTable
-//                        .getNonPrimaryKeyColumns();
-//            } else {
-//                introspectedColumns = introspectedTable.getBaseColumns();
-//            }
-//        }
-        introspectedColumns = introspectedTable.getAllColumns();
+        if (includePrimaryKeyColumns()) {
+            if (includeBLOBColumns()) {
+                introspectedColumns = introspectedTable.getAllColumns();
+            } else {
+                introspectedColumns = introspectedTable.getNonBLOBColumns();
+            }
+        } else {
+            if (includeBLOBColumns()) {
+                introspectedColumns = introspectedTable
+                        .getNonPrimaryKeyColumns();
+            } else {
+                introspectedColumns = introspectedTable.getBaseColumns();
+            }
+        }
         return introspectedColumns;
     }
 }

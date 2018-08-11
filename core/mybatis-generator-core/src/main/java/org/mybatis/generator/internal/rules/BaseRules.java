@@ -108,10 +108,9 @@ public abstract class BaseRules implements Rules {
 
         String answer;
 
-//        if (generateRecordWithBLOBsClass()) {
-//            answer = introspectedTable.getRecordWithBLOBsType();
-//        } else
-            if (generateBaseRecordClass()) {
+        if (generateRecordWithBLOBsClass()) {
+            answer = introspectedTable.getRecordWithBLOBsType();
+        } else if (generateBaseRecordClass()) {
             answer = introspectedTable.getBaseRecordType();
         } else {
             answer = introspectedTable.getPrimaryKeyType();

@@ -43,12 +43,11 @@ public class UpdateBatchByPrimaryKeySelectiveMethodGenerator extends
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         importedTypes.add(FullyQualifiedJavaType.getNewListInstance());
         FullyQualifiedJavaType recordType;
-//        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-//            recordType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
-//        } else {
-//            recordType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-//        }
-        recordType=introspectedTable.getRules().calculateAllFieldsClass();
+        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+            recordType = new FullyQualifiedJavaType(introspectedTable.getRecordWithBLOBsType());
+        } else {
+            recordType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+        }
         importedTypes.add(recordType);
 
         Method method = new Method();

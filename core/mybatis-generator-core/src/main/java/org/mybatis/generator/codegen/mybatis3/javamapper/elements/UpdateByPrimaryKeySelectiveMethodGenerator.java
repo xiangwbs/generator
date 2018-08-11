@@ -46,14 +46,13 @@ public class UpdateByPrimaryKeySelectiveMethodGenerator extends
         Set<FullyQualifiedJavaType> importedTypes = new TreeSet<>();
         FullyQualifiedJavaType parameterType;
 
-//        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
-//            parameterType = new FullyQualifiedJavaType(introspectedTable
-//                    .getRecordWithBLOBsType());
-//        } else {
-//            parameterType = new FullyQualifiedJavaType(introspectedTable
-//                    .getBaseRecordType());
-//        }
-        parameterType=introspectedTable.getRules().calculateAllFieldsClass();
+        if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
+            parameterType = new FullyQualifiedJavaType(introspectedTable
+                    .getRecordWithBLOBsType());
+        } else {
+            parameterType = new FullyQualifiedJavaType(introspectedTable
+                    .getBaseRecordType());
+        }
 
         importedTypes.add(parameterType);
 
