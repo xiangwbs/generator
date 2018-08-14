@@ -540,7 +540,7 @@ public abstract class IntrospectedTable {
         setResultMapWithBLOBsId("ResultMapWithBLOBs"); //$NON-NLS-1$
         setExampleWhereClauseId("Example_Where_Clause"); //$NON-NLS-1$
         setBaseColumnListId("Base_Column_List"); //$NON-NLS-1$
-        setBlobColumnListId("Blob_Column_List"); //$NON-NLS-1$
+        setBlobColumnListId("Base_Column_List");
         setMyBatis3UpdateByExampleWhereClauseId("Update_By_Example_Where_Clause"); //$NON-NLS-1$
         setTableId("Table");//新增table属性
         setConditionId("Condition");//新增condition属性
