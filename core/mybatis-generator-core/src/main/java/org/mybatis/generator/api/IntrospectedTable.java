@@ -537,7 +537,7 @@ public abstract class IntrospectedTable {
         setUpdateBatchByPrimaryKeySelectiveStatementId("updateBatch");
         setUpdateByPrimaryKeyWithBLOBsStatementId("updateByPrimaryKeyWithBLOBs"); //$NON-NLS-1$
         setBaseResultMapId("BaseResultMap"); //$NON-NLS-1$
-        setResultMapWithBLOBsId("ResultMapWithBLOBs"); //$NON-NLS-1$
+        setResultMapWithBLOBsId("BaseResultMap"); //$NON-NLS-1$
         setExampleWhereClauseId("Example_Where_Clause"); //$NON-NLS-1$
         setBaseColumnListId("Base_Column_List"); //$NON-NLS-1$
         setBlobColumnListId("Base_Column_List");
